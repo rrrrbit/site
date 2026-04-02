@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OPEN FIELD</title>
+
+  <!--
+    ═══════════════════════════════════════════════════
+    OPEN FIELD — Infinite Canvas Prototype
+
+    Architecture overview:
+    ┌─────────────────────────────────────────────────┐
+    │  POINTER LOCK API                               │
+    │  captures mouse — returns movementX/Y delta     │
+    ├─────────────────────────────────────────────────┤
+    │  CURSOR (world-space)                           │
+    │  float position in 4000×3000 world              │
+    │  constrained by wall collision rectangles        │
+    ├─────────────────────────────────────────────────┤
+    │  CAMERA (world-space)                           │
+    │  lerps toward cursor each frame                 │
+    │  transforms the #world div via CSS translate    │
+    ├─────────────────────────────────────────────────┤
+    │  #cursor DOM element                            │
+    │  positioned at (cursorWorldX - camX, ...)       │
+    │  i.e. screen-space projection of world cursor   │
+    └─────────────────────────────────────────────────┘
+
+    World layout (4000×3000px):
+    ┌──────────────────────────────┬──┬───────┐
+    │ [MANIFESTO]   [HERO]         │  │[VOID] │
+    │              [GALLERY]       │  │       │
+    │                              │ gap     │
+    ├──────────────gap─────────────┤  │       │
+    │ [ABOUT]      [CTA]           │  │       │
+    │              [404]           │  │       │
+    └──────────────────────────────┴──┴───────┘
+    left = main world  right = void zone (behind wall)
+    ═══════════════════════════════════════════════════
+  -->
+
+  <!--
+    FONTS
+    Cormorant Garamond — high-contrast serif for content
+    IBM Plex Mono — technical meta layer (HUD, labels)
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="style.css" />
+  <script async src="scripts/main.js"></script>
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet"> -->
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════
+       ENTRY OVERLAY
+       Shown on load. Requests pointer lock
+       when the Enter button is clicked.
+       Fades out once lock is acquired.
+  ════════════════════════════════════════ -->
+  <div id="overlay">
+    <p id="overlay-title">OPEN FIELD</p>
+    <p id="overlay-sub">infinite canvas</p>
+    <p id="overlay-note">
+      move your mouse to navigate<br>
+      walls block direct paths<br>
+      some zones are hidden
+    </p>
+    <button id="enter-btn">ENTER</button>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       HUD — persistent position display
+  ════════════════════════════════════════ -->
+  <div id="hud">
+    <span id="hud-coords">x:0000 y:0000</span>
+    <span id="hud-zone">—</span>
+  </div>
+
+  <!-- Pointer lock reminder -->
+  <div id="esc-hint">ESC TO RELEASE</div>
+
+  <!-- ════════════════════════════════════════
+       FAKE CURSOR
+       Crosshair element. Positioned in fixed/
+       screen space each frame by JS.
+       CSS transform: translate(-50%,-50%)
+       centres it on the logical cursor point.
+  ════════════════════════════════════════ -->
+  <div id="cursor"></div>
+
+  <!-- ════════════════════════════════════════
+       WORLD
+       4000×3000px canvas.
+       CSS transform: translate(-camX, -camY)
+       is set every animation frame.
+
+       Structure:
+       - #world-bg   : grid texture
+       - .wall       : navigation obstacles
+       - .island     : content fragments
+       - .world-label: ambient markers
+  ════════════════════════════════════════ -->
+  <div id="world">
+
+    <!-- Subtle grid background -->
+    <div id="world-bg"></div>
+
+
+    <!-- ──────────────────────────────────────
+         WALLS
+         These DOM elements MUST match the
+         walls[] array in the JS below.
+         Any mismatch creates visual/logical
+         desync (cursor passes visible walls).
+    ────────────────────────────────────── -->
+
+    <!-- Outer boundary — 60px on all sides -->
+    <div class="wall" style="left:0;    top:0;      width:4000px; height:60px;"></div>
+    <div class="wall" style="left:0;    top:2940px; width:4000px; height:60px;"></div>
+    <div class="wall" style="left:0;    top:0;      width:60px;   height:3000px;"></div>
+    <div class="wall" style="left:3940px; top:0;    width:60px;   height:3000px;"></div>
+
+    <!--
+      Vertical wall sealing off the VOID zone.
+      x = 3050..3100. Two segments with a gap.
+      GAP: y = 750..1000 (250px).
+      You must find this passage to enter the east section.
+    -->
+    <div class="wall" style="left:3050px; top:60px;   width:50px; height:690px;"></div>
+    <div class="wall" style="left:3050px; top:1000px; width:50px; height:1940px;"></div>
+
+    <!--
+      Horizontal mid-wall dividing north/south.
+      y = 1460..1500 (40px tall). Two segments.
+      GAP: x = 1300..1700 (400px).
+      Moving south requires finding this passage.
+    -->
+    <div class="wall" style="left:60px;   top:1460px; width:1240px; height:40px;"></div>
+    <div class="wall" style="left:1700px; top:1460px; width:1350px; height:40px;"></div>
+
+
+    <!-- ──────────────────────────────────────
+         CONTENT ISLANDS
+         Each is a fragment of recognisable
+         web UI — nav bars, article text, grids,
+         forms — isolated in the void.
+    ────────────────────────────────────── -->
+
+    <!--
+      ISLAND: HERO (1380, 880)
+      Starting zone. Fake homepage fragment.
+      Has a nav bar, large editorial headline,
+      brief description, and a CTA tag.
+    -->
+    <section class="island" id="island-hero" style="left:1380px; top:880px;">
+      <nav class="hero-nav">
+        <span>OPEN FIELD</span>
+        <div class="hero-nav-links">
+          <span>about</span>
+          <span>work</span>
+          <span>contact</span>
+        </div>
+      </nav>
+      <div class="hero-body">
+        <h1>The web<br>as <em>territory.</em></h1>
+        <p>You are not scrolling. You are moving
+through space. The layout is a landscape.
+Navigate to discover what is here.
+Some paths are blocked. One zone is hidden.</p>
+        <span class="hero-tag">explore ↓</span>
+      </div>
+    </section>
+
+    <!--
+      ISLAND: MANIFESTO (100, 100)
+      Editorial long-form article fragment.
+      Northwest corner of the world.
+      Accessible immediately — acts as
+      orientation text for the prototype.
+    -->
+    <article class="island" id="island-manifesto" style="left:100px; top:100px;">
+      <div class="manifesto-inner">
+        <span class="section-label">01 / Manifesto</span>
+        <h2>Against the<br>Infinite Scroll</h2>
+        <p>For decades, the dominant metaphor of
+the internet has been the page — a document
+read top to bottom, link to link, tab to tab.
+Navigation became a one-dimensional act.</p>
+        <div class="manifesto-pull">
+          "The territory was always richer
+than the map allowed."
+        </div>
+        <p>What if space itself were the interface?
+What if discovery required movement — not
+clicking, not scrolling, but navigating?</p>
+        <p>This canvas is an experiment in that
+question. There is no menu, no sitemap.
+Only the world, and what you find in it.</p>
+        <p style="color:var(--island-dim); font-size:0.82rem; font-family:var(--serif);">
+          Some of what's here is meant to be found.
+          <em>Some is not.</em>
+        </p>
+      </div>
+    </article>
+
+    <!--
+      ISLAND: GALLERY (2200, 660)
+      3×2 image grid — abstract colour swatches
+      as placeholder images. Standard portfolio
+      layout fragment. Northeast of hero.
+    -->
+    <section class="island" id="island-gallery" style="left:2200px; top:660px;">
+      <div class="gallery-header">
+        <h2>Selected Work</h2>
+        <span>6 items</span>
+      </div>
+      <div class="gallery-grid">
+        <!-- Each cell: unique gradient as abstract "image" -->
+        <div class="gallery-cell">
+          <div class="gallery-cell-fill" style="background:linear-gradient(135deg,#2a2c40,#4a3f6b);"></div>
+          <span class="gallery-cell-num">001</span>
+        </div>
+        <div class="gallery-cell">
+          <div class="gallery-cell-fill" style="background:linear-gradient(135deg,#3a2616,#8a5c38);"></div>
+          <span class="gallery-cell-num">002</span>
+        </div>
+        <div class="gallery-cell">
+          <div class="gallery-cell-fill" style="background:linear-gradient(135deg,#162a1e,#3a8a58);"></div>
+          <span class="gallery-cell-num">003</span>
+        </div>
+        <div class="gallery-cell">
+          <div class="gallery-cell-fill" style="background:linear-gradient(135deg,#2e1a1a,#8a3636);"></div>
+          <span class="gallery-cell-num">004</span>
+        </div>
+        <div class="gallery-cell">
+          <div class="gallery-cell-fill" style="background:linear-gradient(135deg,#1a2030,#3a5c8a);"></div>
+          <span class="gallery-cell-num">005</span>
+        </div>
+        <div class="gallery-cell">
+          <div class="gallery-cell-fill" style="background:linear-gradient(135deg,#261636,#6b3a8a);"></div>
+          <span class="gallery-cell-num">006</span>
+        </div>
+      </div>
+    </section>
+
+    <!--
+      ISLAND: ABOUT (100, 1650)
+      Bio/profile card. South of the mid-wall.
+      Requires navigating through the gap
+      (x=1300..1700) to access the southern zone.
+    -->
+    <section class="island" id="island-about" style="left:100px; top:1650px;">
+      <div class="about-inner">
+        <div class="about-avatar"></div>
+        <span class="section-label">02 / About</span>
+        <h2>The Author</h2>
+        <p>A designer working at the intersection
+of spatial metaphor, interface theory,
+and digital form. This canvas is a prototype
+— an argument as much as a product.</p>
+        <div class="about-tags">
+          <span class="about-tag">spatial ui</span>
+          <span class="about-tag">worldbuilding</span>
+          <span class="about-tag">game design</span>
+          <span class="about-tag">theory</span>
+        </div>
+      </div>
+    </section>
+
+    <!--
+      ISLAND: CTA (1380, 1680)
+      Dark inverted call-to-action block.
+      Newsletter signup pattern.
+      Also south of mid-wall.
+    -->
+    <section class="island" id="island-cta" style="left:1380px; top:1680px;">
+      <div class="cta-inner">
+        <h2>You found<br>something real.</h2>
+        <p>Not everything here is meant to be found.
+Subscribe for dispatches from the territories
+that exist outside the map.</p>
+        <div class="cta-row">
+          <input type="email" placeholder="your@address.here" autocomplete="off">
+          <button type="button">SEND</button>
+        </div>
+      </div>
+    </section>
+
+    <!--
+      ISLAND: 404 (2200, 2300)
+      Dead-end fragment. Minimal by design.
+      Far south — requires significant exploration.
+    -->
+    <section class="island" id="island-404" style="left:2200px; top:2300px;">
+      <div class="err-inner">
+        <div class="err-num">404</div>
+        <p>dead end.<br>you were not supposed to be here.</p>
+      </div>
+    </section>
+
+    <!--
+      ISLAND: VOID (3150, 140)
+      ★ SECRET ZONE ★
+      Only accessible by finding the gap in the
+      vertical wall (y=750..1000, x≈3050).
+      Phosphor terminal aesthetic — deliberate
+      contrast to the cream islands.
+    -->
+    <section class="island" id="island-void" style="left:3150px; top:140px;">
+      <div class="void-inner">
+        <div class="void-statusbar">
+          SYS:FIELD — SECTOR 07 — ACCESS: UNVERIFIED
+        </div>
+        <div class="void-title">THE VOID</div>
+        <div class="void-body">
+          <p>You found the gap.</p>
+          <p>The wall was meant to redirect.
+The gap was always there.</p>
+          <p class="void-hi">This is the part of every
+website that exists but is never surfaced.
+Staging servers. Deleted drafts.
+Half-finished thoughts behind a flag.</p>
+          <p>There's nothing useful here.
+That's the point.</p>
+          <p>— — —</p>
+          <p>Consider: every website has a void.
+A zone of content that lives in the codebase
+but is never linked, never indexed,
+never seen. You've been navigating
+voids your whole online life.</p>
+          <p class="void-hi">You just didn't have a body
+to walk into them with.<span class="void-caret"></span></p>
+        </div>
+        <div class="void-foot" id="void-coords">
+          x:3150+ y:140+ — sector 07
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ──────────────────────────────────────
+         AMBIENT WORLD LABELS
+         Floating text in the void — functions
+         like cardinal directions in a game world.
+         Very low opacity so they don't dominate.
+    ────────────────────────────────────── -->
+    <div class="world-label" style="left:1600px; top:90px;">north zone</div>
+    <div class="world-label" style="left:400px;  top:1510px;">— mid-wall passage —</div>
+    <div class="world-label" style="left:1600px; top:2890px;">southern limit</div>
+    <!-- Rotated east-wall label -->
+    <div class="world-label" style="left:3115px; top:1800px; transform:rotate(90deg); transform-origin:left center;">east wall</div>
+    <!-- Very faint VOID label bleeds through the wall -->
+    <div class="world-label" style="left:3200px; top:900px; color:rgba(180,255,190,0.04); font-size:0.7rem;">void</div>
+
+  </div><!-- /#world -->
+</body>
+</html>

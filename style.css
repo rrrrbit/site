@@ -1,0 +1,680 @@
+/* ══════════════════════════════════════
+       RESET & BASE
+    ══════════════════════════════════════ */
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* CSS custom properties — theme tokens */
+    :root {
+      --void-bg:        #070708;       /* outer void colour */
+      --void-grid:      rgba(255,255,255,0.03); /* subtle world grid */
+      --wall-bg:        #0f0f11;       /* wall fill */
+      --wall-edge:      rgba(255,255,255,0.06); /* wall inner border */
+      --island-bg:      #f4efe6;       /* content island background */
+      --island-ink:     #1c1b1a;       /* main text */
+      --island-dim:     #8a8580;       /* secondary text */
+      --island-rule:    rgba(28,27,26,0.12); /* divider lines */
+      --accent:         #c8372d;       /* red accent */
+      --void-green:     rgba(180,255,190,0.8); /* void terminal text */
+      --mono:           'IBM Plex Mono', monospace;
+      --serif:          'Cormorant Garamond', serif;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;      /* world is panned via transform, not scroll */
+      background: var(--void-bg);
+      font-family: var(--mono);
+      cursor: none;          /* real cursor hidden — replaced by #cursor */
+      user-select: none;     /* prevent text drag-selection while navigating */
+    }
+
+
+    /* ══════════════════════════════════════
+       ENTRY OVERLAY
+       Fullscreen overlay shown before pointer
+       lock is acquired. Click ENTER to lock.
+    ══════════════════════════════════════ */
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: var(--void-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      transition: opacity 0.7s ease;
+    }
+
+    /* JS adds .hidden when pointer lock activates */
+    #overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #overlay-title {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      letter-spacing: 0.25em;
+      color: var(--island-bg);
+    }
+
+    #overlay-sub {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--island-dim);
+    }
+
+    #overlay-note {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.12);
+      margin-top: 8px;
+      text-align: center;
+      line-height: 1.9;
+    }
+
+    #enter-btn {
+      margin-top: 20px;
+      padding: 11px 36px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--island-bg);
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.25s;
+    }
+
+    #enter-btn:hover { border-color: rgba(255,255,255,0.5); }
+
+
+    /* ══════════════════════════════════════
+       HUD (heads-up display)
+       Persistent overlay showing world coords
+       and current zone label.
+    ══════════════════════════════════════ */
+
+    #hud {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 100;
+      pointer-events: none;
+      display: flex;
+      gap: 20px;
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.18);
+    }
+
+    /* Escape key reminder — top right */
+    #esc-hint {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      pointer-events: none;
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.1);
+    }
+
+
+    /* ══════════════════════════════════════
+       FAKE CURSOR
+       Fixed to viewport. Crosshair shape via
+       pseudo-elements. Positioned by JS each
+       frame at (cursorWorldX - camX, ...).
+    ══════════════════════════════════════ */
+
+    #cursor {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      pointer-events: none;
+      z-index: 500;
+      /* transform centers the element on its position */
+      transform: translate(-50%, -50%);
+    }
+
+    /* Vertical bar of crosshair */
+    #cursor::before {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 12px;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.88);
+    }
+
+    /* Horizontal bar of crosshair */
+    #cursor::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 1px;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.88);
+    }
+
+
+    /* ══════════════════════════════════════
+       WORLD CONTAINER
+       4000×3000px absolute div.
+       CSS transform: translate(-camX, -camY)
+       is applied every animation frame.
+       will-change: transform hints GPU compositing.
+    ══════════════════════════════════════ */
+
+    #world {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4000px;
+      height: 3000px;
+      will-change: transform;
+    }
+
+    /* Subtle grid lines as world background texture */
+    #world-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(var(--void-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--void-grid) 1px, transparent 1px);
+      background-size: 100px 100px;
+    }
+
+
+    /* ══════════════════════════════════════
+       WALLS
+       Visually: near-black boxes with subtle
+       inner border. The JS walls[] array must
+       match these dimensions exactly.
+    ══════════════════════════════════════ */
+
+    .wall {
+      position: absolute;
+      background: var(--wall-bg);
+      box-shadow: inset 0 0 0 1px var(--wall-edge);
+    }
+
+
+    /* ══════════════════════════════════════
+       CONTENT ISLANDS (base styles)
+       Each island is an absolutely positioned
+       fragment of "normal web" UI.
+    ══════════════════════════════════════ */
+
+    .island {
+      position: absolute;
+      background: var(--island-bg);
+      color: var(--island-ink);
+      overflow: hidden;
+    }
+
+    /* Ambient glow pooling around each island */
+    .island::after {
+      content: '';
+      position: absolute;
+      inset: -50px;
+      background: radial-gradient(ellipse at center,
+        rgba(244,239,230,0.055) 0%,
+        transparent 65%
+      );
+      pointer-events: none;
+      z-index: -1;
+    }
+
+
+    /* ══════════════════════════════════════
+       ISLAND: HERO
+       Fake website homepage fragment.
+       720×420px. Starting zone for navigation.
+    ══════════════════════════════════════ */
+
+    #island-hero { width: 720px; height: 420px; }
+
+    /* Navbar strip at top */
+    .hero-nav {
+      height: 46px;
+      padding: 0 32px;
+      border-bottom: 1px solid var(--island-rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      color: var(--island-dim);
+    }
+
+    .hero-nav-links { display: flex; gap: 20px; }
+
+    .hero-body {
+      padding: 50px 56px;
+    }
+
+    .hero-body h1 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 3.4rem;
+      line-height: 1.04;
+      letter-spacing: 0.015em;
+      margin-bottom: 22px;
+    }
+
+    .hero-body h1 em {
+      font-style: italic;
+      color: var(--island-dim);
+    }
+
+    .hero-body p {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      line-height: 1.9;
+      color: var(--island-dim);
+      letter-spacing: 0.04em;
+      max-width: 380px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      margin-top: 26px;
+      font-family: var(--mono);
+      font-size: 0.53rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 2px;
+    }
+
+
+    /* ══════════════════════════════════════
+       ISLAND: MANIFESTO
+       Long-form editorial article fragment.
+       500×580px. Northwest corner.
+    ══════════════════════════════════════ */
+
+    #island-manifesto { width: 500px; height: 580px; }
+
+    .manifesto-inner { padding: 50px 50px; }
+
+    /* Small uppercase label used across islands */
+    .section-label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--island-dim);
+      margin-bottom: 28px;
+    }
+
+    .manifesto-inner h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.85rem;
+      line-height: 1.18;
+      margin-bottom: 26px;
+    }
+
+    .manifesto-inner p {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 0.95rem;
+      line-height: 1.78;
+      color: #3a3835;
+      margin-bottom: 18px;
+    }
+
+    /* Styled blockquote */
+    .manifesto-pull {
+      margin: 24px 0;
+      padding: 0 0 0 18px;
+      border-left: 2px solid var(--accent);
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.55;
+      color: #2a2927;
+    }
+
+
+    /* ══════════════════════════════════════
+       ISLAND: GALLERY
+       3×2 grid of abstract colour swatches
+       posing as a portfolio/image grid.
+       680×535px.
+    ══════════════════════════════════════ */
+
+    #island-gallery { width: 680px; height: 535px; }
+
+    .gallery-header {
+      padding: 26px 30px 18px;
+      border-bottom: 1px solid var(--island-rule);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .gallery-header h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.4rem;
+    }
+
+    .gallery-header span {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      color: var(--island-dim);
+      letter-spacing: 0.1em;
+    }
+
+    /* 3-column auto grid, cells fill available space */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      padding: 2px;
+    }
+
+    .gallery-cell {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+    }
+
+    /* Colour fill representing an image */
+    .gallery-cell-fill { width: 100%; height: 100%; }
+
+    .gallery-cell-num {
+      position: absolute;
+      bottom: 8px;
+      left: 10px;
+      font-family: var(--mono);
+      font-size: 0.48rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.08em;
+    }
+
+
+    /* ══════════════════════════════════════
+       ISLAND: ABOUT
+       Profile/bio card. 520×390px.
+       South of mid-wall, northwest.
+    ══════════════════════════════════════ */
+
+    #island-about { width: 520px; height: 390px; }
+
+    .about-inner { padding: 46px 50px; }
+
+    /* Abstract geometric avatar stand-in */
+    .about-avatar {
+      width: 50px;
+      height: 50px;
+      background: var(--island-ink);
+      margin-bottom: 22px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    }
+
+    .about-inner h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.55rem;
+      margin-bottom: 12px;
+    }
+
+    .about-inner p {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 0.93rem;
+      line-height: 1.72;
+      color: #4a4846;
+      margin-bottom: 22px;
+    }
+
+    .about-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+
+    .about-tag {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid rgba(28,27,26,0.18);
+      color: var(--island-dim);
+    }
+
+
+    /* ══════════════════════════════════════
+       ISLAND: CTA
+       Dark/inverted call-to-action section.
+       560×330px. South of mid-wall, centre.
+    ══════════════════════════════════════ */
+
+    /* Note: inverted colour scheme — dark bg */
+    #island-cta {
+      width: 560px;
+      height: 330px;
+      background: var(--island-ink);
+      color: var(--island-bg);
+    }
+
+    #island-cta::after {
+      /* Override parent glow to use dark colour */
+      background: radial-gradient(ellipse at center,
+        rgba(28,27,26,0.12) 0%, transparent 65%
+      );
+    }
+
+    .cta-inner { padding: 48px 52px; }
+
+    .cta-inner h2 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 2.1rem;
+      line-height: 1.12;
+      margin-bottom: 18px;
+    }
+
+    .cta-inner p {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      line-height: 1.85;
+      color: rgba(244,239,230,0.45);
+      letter-spacing: 0.04em;
+      margin-bottom: 26px;
+    }
+
+    /* Email input + button row */
+    .cta-row {
+      display: flex;
+      border: 1px solid rgba(244,239,230,0.22);
+    }
+
+    .cta-row input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 10px 14px;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--island-bg);
+      letter-spacing: 0.06em;
+    }
+
+    .cta-row input::placeholder { color: rgba(244,239,230,0.25); }
+
+    .cta-row button {
+      padding: 10px 18px;
+      background: var(--island-bg);
+      color: var(--island-ink);
+      border: none;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+
+    /* ══════════════════════════════════════
+       ISLAND: 404
+       A dead-end fragment. Deliberately sparse.
+       420×280px. Floating in the south.
+    ══════════════════════════════════════ */
+
+    #island-404 { width: 420px; height: 280px; }
+
+    .err-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .err-num {
+      font-family: var(--serif);
+      font-size: 5.5rem;
+      font-weight: 300;
+      line-height: 1;
+      color: rgba(28,27,26,0.1);
+      margin-bottom: 14px;
+    }
+
+    .err-inner p {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: var(--island-dim);
+      letter-spacing: 0.1em;
+      line-height: 2;
+    }
+
+
+    /* ══════════════════════════════════════
+       ISLAND: VOID (secret zone)
+       Accessible only through a gap in the
+       vertical wall. Terminal/phosphor aesthetic
+       as a deliberate contrast to the cream islands.
+       620×700px.
+    ══════════════════════════════════════ */
+
+    #island-void {
+      width: 620px;
+      height: 700px;
+      background: #000;
+      color: var(--void-green);
+    }
+
+    /* Override glow for dark island */
+    #island-void::after {
+      background: radial-gradient(ellipse at center,
+        rgba(130,255,150,0.04) 0%, transparent 65%
+      );
+    }
+
+    .void-inner {
+      padding: 44px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .void-statusbar {
+      font-size: 0.54rem;
+      letter-spacing: 0.14em;
+      color: rgba(180,255,190,0.28);
+      border-bottom: 1px solid rgba(180,255,190,0.1);
+      padding-bottom: 14px;
+      margin-bottom: 36px;
+    }
+
+    .void-title {
+      font-family: var(--mono);
+      font-weight: 500;
+      font-size: 1.5rem;
+      letter-spacing: 0.12em;
+      color: rgba(180,255,190,0.9);
+      margin-bottom: 28px;
+    }
+
+    .void-body {
+      font-size: 0.66rem;
+      line-height: 2.1;
+      color: rgba(180,255,190,0.45);
+      flex: 1;
+    }
+
+    .void-body p { margin-bottom: 14px; }
+
+    /* Highlighted text within void */
+    .void-hi { color: rgba(180,255,190,0.88); }
+
+    .void-foot {
+      font-size: 0.5rem;
+      color: rgba(180,255,190,0.18);
+      letter-spacing: 0.1em;
+      margin-top: 24px;
+    }
+
+    /* Blinking cursor in void terminal */
+    .void-caret {
+      display: inline-block;
+      width: 7px;
+      height: 1em;
+      background: rgba(180,255,190,0.7);
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+
+    /* ══════════════════════════════════════
+       FLOATING WORLD LABELS
+       Ambient direction markers in the void.
+       Purely decorative — shows orientation.
+    ══════════════════════════════════════ */
+
+    .world-label {
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.06);
+      pointer-events: none;
+      white-space: nowrap;
+    }
