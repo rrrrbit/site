@@ -2,16 +2,18 @@
 <html>
     <head>
         <title>rbit</title>
+        <script src="scripts/main.js"></script>
 
         <link rel="preconnect" href="https://googleapis.com">
         <link rel="preconnect" href="https://gstatic.com" crossorigin>
 
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Mono">
-        <script async src="scripts/main.js"></script>
     </head>
     
     <body>
+        <div class="wall" style="left:4000px;    top:4000px;      width:1px; height:1px;"></div>
+        <div id="testWall"class="wall" style="left: 2000px;    top: 2000px;      width:512px; height:512px;"></div>
         <h1>Hello welcome to my site</h1>
         My name's <b>rbit/jem</b>! and youre on my neocities site!
         <h2>What's on this site?</h2>
@@ -21,13 +23,10 @@
         my <a href="https://r-bit.carrd.co">carrd</a> is the current home of most of my projects.<br><br>
         <a href="https://celestialspark21.neocities.org/">cel's site &lt;3</a><br>
         <button id="scrolltest" onclick="scrollTest()">scroll test</button><br>
+        <button id="scrollcentertest" onclick="scrollCenterTest()">scroll to center</button><br>
 
         <img src="assets/neocities.png" alt="hosted in neocities">
-
-        <div class="wall" style="left:0;    top:-2940;      width:4000px; height:60px;"></div>
-        <div class="wall" style="left:0;    top:2940px; width:4000px; height:60px;"></div>
-
-        <div class="wall" style="left:-3940;    top:0;      width:60px;   height:3000px;"></div>
-        <div class="wall" style="left:3940px; top:0;    width:60px;   height:3000px;"></div>
+            
+        <div class="scrollHitbox"></div>
     </body>
 </html>
