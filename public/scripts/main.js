@@ -77,6 +77,8 @@ function getProjOverlap(a0, a1, b0, b1)
 }
 
 function checkOverlap() {
+    //need to make it win over scrollbar and middleclick
+
     const currentScrollX = window.scrollX || window.pageXOffset;
     const currentScrollY = window.scrollY || window.pageYOffset;
     
@@ -95,7 +97,7 @@ function checkOverlap() {
         if(scrollHitbox && testWall) {
             internalX += scrollDeltaX;
             internalY += scrollDeltaY;
-            console.log("internal: "+internalX.toString()+", "+internalY.toString()) // see internal position
+            //console.log("internal: "+internalX.toString()+", "+internalY.toString()) // see internal position
 
             // substepped collision checksssss
 
