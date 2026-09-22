@@ -1,11 +1,13 @@
 body 
 {
-    background: #16161d;
-    font-family: "Space Mono", monospace;
+    position: absolute;
+    background: black;
+    font-family: "IBM Plex Mono", monospace;
     color: white;
-    
-    max-width: 600px;
-    margin: 0 auto;
+}
+
+html {
+  scrollbar-width: none;
 }
 
 a
@@ -23,13 +25,29 @@ a:hover
       background: rgba(255, 255, 255);
 }
 
-.world
-{
+.home {
     position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* background: rgb(255, 0, 0, 0.25); */
+}
+
+.homeInner {
+    max-width: 600px;
+    margin: 0 auto;
+
+    /* background: rgb(0, 0, 255, 0.25); */
+
 }
 
 .worldCenter {
     position: absolute;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     background: rgba(255, 255, 255);
 }
