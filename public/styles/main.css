@@ -23,6 +23,17 @@ a:hover
       background: rgba(255, 255, 255);
 }
 
+.world
+{
+    position: absolute;
+}
+
+.worldCenter {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255);
+}
+
 .scrollHitbox
 {
     position: fixed;

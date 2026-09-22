@@ -76,7 +76,7 @@ function getProjOverlap(a0, a1, b0, b1)
     );
 }
 
-function checkOverlap() {
+function handleOverlap() {
     //need to make it win over scrollbar and middleclick
 
     const currentScrollX = window.scrollX || window.pageXOffset;
@@ -111,21 +111,26 @@ function checkOverlap() {
 
             let predictX = internalX - scrollDeltaX;
             let predictY = internalY - scrollDeltaY;
-
+            let breakLoop = false;
             for(let i = 0; i < steps; i++) {
                 predictX += stepX;
                 predictY += stepY;
 
-                if(willOverlap(scrollHitbox, testWall, predictX, predictY)) {
-                    console.log("Overlap detected!");
+                for(const wall of walls) {
+                    if(willOverlap(scrollHitbox, wall, predictX, predictY)) {
+                        console.log("Overlap detected!");
 
-                    const mtv = getMinimumTranslationVector(scrollHitbox, testWall, predictX, predictY);
+                        const mtv = getMinimumTranslationVector(scrollHitbox, wall, predictX, predictY);
 
-                    predictX += mtv.x;
-                    predictY += mtv.y;
+                        predictX += mtv.x;
+                        predictY += mtv.y;
 
-                    internalX = predictX;
-                    internalY = predictY;
+                        internalX = predictX;
+                        internalY = predictY;
+                        breakLoop = true;
+                    }
+                }
+                if(breakLoop){
                     break;
                 }
             }
@@ -137,13 +142,29 @@ function checkOverlap() {
             }
         }
     }
-    window.requestAnimationFrame(checkOverlap);
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+let walls = document.querySelectorAll('.wall');
+
+
+
+function init() {
+    walls = document.querySelectorAll('.wall');
+
+    document.querySelector('.worldCenter').scrollIntoView({ behavior: 'instant', block: 'center', inline: 'center' });
     lastScrollX = window.scrollX || window.pageXOffset;
     lastScrollY = window.scrollY || window.pageYOffset;
     internalX = lastScrollX;
     internalY = lastScrollY;
-    window.requestAnimationFrame(checkOverlap);
+}
+
+function update() {
+    handleOverlap()
+    
+    window.requestAnimationFrame(update);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    init();
+    window.requestAnimationFrame(update);
 });
