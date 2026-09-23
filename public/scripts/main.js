@@ -91,7 +91,7 @@ function handleOverlap(currentScrollX, currentScrollY, scrollDeltaX, scrollDelta
 
     const distance = Math.hypot(scrollDeltaX, scrollDeltaY);
 
-    const step = 1;
+    const step = 2;
     const steps = Math.ceil(distance / step);
 
     const stepX = scrollDeltaX / steps;
@@ -140,8 +140,29 @@ function hardScrollTo(x, y) {
 
     lastScrollX = window.scrollX || window.pageXOffset;
     lastScrollY = window.scrollY || window.pageYOffset;
-}
 
+    const hitboxX = document.getElementById('scrollHitbox').getBoundingClientRect().left + (window.scrollX || window.pageXOffset);
+    const hitboxY = document.getElementById('scrollHitbox').getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+
+    lastHitboxX = hitboxX;
+    lastHitboxY = hitboxY;
+}
+function hardScrollBy(x,y) {
+    window.scrollBy({
+        left: x,
+        top: y,
+        behavior: "instant"
+    });
+
+    lastScrollX = window.scrollX || window.pageXOffset;
+    lastScrollY = window.scrollY || window.pageYOffset;
+
+    const hitboxX = document.getElementById('scrollHitbox').getBoundingClientRect().left + (window.scrollX || window.pageXOffset);
+    const hitboxY = document.getElementById('scrollHitbox').getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+
+    lastHitboxX = hitboxX;
+    lastHitboxY = hitboxY;
+}
 function hardScrollIntoView(element, args) {
     suppressScrollEvent = true;
 
@@ -152,6 +173,12 @@ function hardScrollIntoView(element, args) {
 
     internalX = lastScrollX;
     internalY = lastScrollY;
+
+    const hitboxX = document.getElementById('scrollHitbox').getBoundingClientRect().left + (window.scrollX || window.pageXOffset);
+    const hitboxY = document.getElementById('scrollHitbox').getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+
+    lastHitboxX = hitboxX;
+    lastHitboxY = hitboxY;
 }
 
 let walls = document.querySelectorAll('.wall');
@@ -162,6 +189,7 @@ function goHome() {
 
 function init() {
     walls = document.querySelectorAll('.wall');
+    console.log("%chowdy :3", "background: black; font-family: monospace; color: white;")
 
     goHome();
     internalX = lastScrollX;
@@ -233,11 +261,10 @@ window.addEventListener('resize', (e) => {
     const hitboxDeltaX = hitboxX - lastHitboxX;
     const hitboxDeltaY = hitboxY - lastHitboxY;
 
-    console.log("Hitbox moved by: " + hitboxDeltaX.toString() + ", " + hitboxDeltaY.toString());
-
     scrollBy(-hitboxDeltaX, -hitboxDeltaY);
 
     lastHitboxX = hitboxX;
     lastHitboxY = hitboxY;
 
 });
+
