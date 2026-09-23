@@ -12,7 +12,7 @@
     </head>
     
     <body style="width: 128000px;   height:128000px;">
-        <div class="worldCenter">middle</div>
+        <div class="worldCenter" id="worldCenter">middle</div>
         
         <div class="home">
             <div class="homeInner">
@@ -32,8 +32,11 @@
         <div id="testWall"class="wall" style="left: 2000px;    top: 0;      width:512px; height:2512px;"></div>
         <div id="testWall2"class="wall" style="left: 0px;    top: 2000px;      width:2512px; height:512px;"></div>
         
-        <div class="scrollHitbox"></div>
-        <div class="hud"><div id="position">0,0</div></div>
-        <div id = "mouseLabel" style = "position: absolute;">meouse</div>
+        <div class="scrollHitbox" id="scrollHitbox"></div>
+        <div class="hud">
+            <div id="position">0,0</div><br>
+            <button id="homeButton" onclick="goHome()">reset</button>
+        </div>
+        <div id = "mouseLabel" style = "position: absolute; z-index: -9999;">meouse</div>
     </body>
 </html>
