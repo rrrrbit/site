@@ -160,6 +160,7 @@ function init() {
 
 function update() {
     handleOverlap()
+    document.getElementById("position").textContent = window.pageXOffset.toString() + ", " + window.pageYOffset.toString();
     
     window.requestAnimationFrame(update);
 }
@@ -168,3 +169,9 @@ window.addEventListener('DOMContentLoaded', () => {
     init();
     window.requestAnimationFrame(update);
 });
+
+window.addEventListener('mousemove', (e) => {
+    document.getElementById("mouseLabel").style.top = e.pageY + "px";
+    document.getElementById("mouseLabel").style.left = e.pageX + "px";
+    document.getElementById("mouseLabel").textContent = e.pageX.toString() + ", " + e.pageY.toString();
+})

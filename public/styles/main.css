@@ -33,7 +33,7 @@ a:hover
     left: 50%;
     transform: translate(-50%, -50%);
 
-    /* background: rgb(255, 0, 0, 0.25); */
+    background: rgb(255, 0, 0, 0.25);
 }
 
 .homeInner {
@@ -61,7 +61,19 @@ a:hover
 
     width: 256px;
     height: 256px;
-    background: rgb(255, 0, 255, 0.25);
+    background: rgba(255, 0, 255, 0.25);
 
     z-index: -9999;
+}
+
+.hud{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+
+    /* background: rgba(0,255,0, 0.1); */
+    z-index: -9999;
+    
 }
