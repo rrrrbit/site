@@ -190,6 +190,10 @@ window.addEventListener('mousemove', (e) => {
  
 let ticking = false;
 let scrollIdleTimer;
+
+let lastHitboxX = 0
+let lastHitboxY = 0
+
 window.addEventListener('scroll', (e) => {
 
     const suppressThisScrollEvent = suppressScrollEvent;
@@ -210,6 +214,12 @@ window.addEventListener('scroll', (e) => {
     lastScrollX = currentScrollX;
     lastScrollY = currentScrollY;
 
+    const hitboxX = document.getElementById('scrollHitbox').getBoundingClientRect().left + (window.scrollX || window.pageXOffset);
+    const hitboxY = document.getElementById('scrollHitbox').getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+
+    lastHitboxX = hitboxX;
+    lastHitboxY = hitboxY;
+
     scrollIdleTimer = setTimeout(() => {
         lastScrollX = window.scrollX || window.pageXOffset;
         lastScrollY = window.scrollY || window.pageYOffset;
@@ -217,11 +227,17 @@ window.addEventListener('scroll', (e) => {
 });
 
 window.addEventListener('resize', (e) => {
-    let currentScrollX = window.scrollX || window.pageXOffset;
-    let currentScrollY = window.scrollY || window.pageYOffset;
+    const hitboxX = document.getElementById('scrollHitbox').getBoundingClientRect().left + (window.scrollX || window.pageXOffset);
+    const hitboxY = document.getElementById('scrollHitbox').getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
 
-    const scrollDeltaX = currentScrollX - lastScrollX;
-    const scrollDeltaY = currentScrollY - lastScrollY;
+    const hitboxDeltaX = hitboxX - lastHitboxX;
+    const hitboxDeltaY = hitboxY - lastHitboxY;
 
-    hardScrollTo(currentScrollX - scrollDeltaX, currentScrollY - scrollDeltaY);
+    console.log("Hitbox moved by: " + hitboxDeltaX.toString() + ", " + hitboxDeltaY.toString());
+
+    scrollBy(-hitboxDeltaX, -hitboxDeltaY);
+
+    lastHitboxX = hitboxX;
+    lastHitboxY = hitboxY;
+
 });
