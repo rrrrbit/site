@@ -137,15 +137,8 @@ function hardScrollTo(x, y) {
         behavior: "instant"
     });
 
-
-    lastScrollX = window.scrollX || window.pageXOffset;
-    lastScrollY = window.scrollY || window.pageYOffset;
-
-    const hitboxX = document.getElementById('scrollHitbox').getBoundingClientRect().left + (window.scrollX || window.pageXOffset);
-    const hitboxY = document.getElementById('scrollHitbox').getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
-
-    lastHitboxX = hitboxX;
-    lastHitboxY = hitboxY;
+    updateLastScroll();
+    updateScrollHitbox();
 }
 function hardScrollBy(x,y) {
     window.scrollBy({
@@ -154,26 +147,27 @@ function hardScrollBy(x,y) {
         behavior: "instant"
     });
 
-    lastScrollX = window.scrollX || window.pageXOffset;
-    lastScrollY = window.scrollY || window.pageYOffset;
-
-    const hitboxX = document.getElementById('scrollHitbox').getBoundingClientRect().left + (window.scrollX || window.pageXOffset);
-    const hitboxY = document.getElementById('scrollHitbox').getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
-
-    lastHitboxX = hitboxX;
-    lastHitboxY = hitboxY;
+    updateLastScroll();
+    updateScrollHitbox();
 }
 function hardScrollIntoView(element, args) {
     suppressScrollEvent = true;
 
     element.scrollIntoView(args);
 
-    lastScrollX = window.scrollX || window.pageXOffset;
-    lastScrollY = window.scrollY || window.pageYOffset;
+    updateLastScroll();
+    updateScrollHitbox();
 
     internalX = lastScrollX;
     internalY = lastScrollY;
 
+    
+}
+function updateLastScroll(){
+    lastScrollX = window.scrollX || window.pageXOffset;
+    lastScrollY = window.scrollY || window.pageYOffset;
+}
+function updateScrollHitbox(){
     const hitboxX = document.getElementById('scrollHitbox').getBoundingClientRect().left + (window.scrollX || window.pageXOffset);
     const hitboxY = document.getElementById('scrollHitbox').getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
 
