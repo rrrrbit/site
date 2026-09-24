@@ -9,39 +9,43 @@ function willOverlap(htbx, wall, nextX, nextY) {
     const wallRect = wall.getBoundingClientRect();
     const htbxRect = htbx.getBoundingClientRect();
 
-    const currentScrollX = window.scrollX || window.pageXOffset;
-    const currentScrollY = window.scrollY || window.pageYOffset;
+    const htbxPredictLeft = nextX;
+    const htbxPredictTop = nextY;
+    const htbxPredictRight = htbxPredictLeft + htbxRect.width;
+    const htbxPredictBottom = htbxPredictTop + htbxRect.height;
 
-    const wallAbsLeft = wallRect.left + currentScrollX;
-    const wallAbsTop = wallRect.top + currentScrollY;
-    
-    const wallPredictLeft = wallAbsLeft - nextX;
-    const wallPredictTop = wallAbsTop - nextY;
-    const wallPredictRight = wallPredictLeft + wallRect.width;
-    const wallPredictBottom = wallPredictTop + wallRect.height; 
+    const wallLeft = getPagePosition(wall).x;
+    const wallTop = getPagePosition(wall).y;
+    const wallRight = wallLeft + wallRect.width;
+    const wallBottom = wallTop + wallRect.height; 
 
     return !(
-        htbxRect.top >= wallPredictBottom || // wall is completely below htbx
-        htbxRect.right <= wallPredictLeft || // wall is completely to the left of htbx
-        htbxRect.bottom <= wallPredictTop || // wall is completely above htbx
-        htbxRect.left >= wallPredictRight    // wall is completely to the right of htbx 
+        htbxPredictTop >= wallBottom || // wall is completely below htbx
+        htbxPredictRight <= wallLeft || // wall is completely to the left of htbx
+        htbxPredictBottom <= wallTop || // wall is completely above htbx
+        htbxPredictLeft >= wallRight    // wall is completely to the right of htbx 
     );
 }
 
 function getMinimumTranslationVector(htbx, wall, nextX, nextY) {
     const wallRect = wall.getBoundingClientRect();
     const htbxRect = htbx.getBoundingClientRect();
-    
-    const wallPredictLeft = getPagePosition(wall).x - nextX;
-    const wallPredictTop = getPagePosition(wall).y - nextY;
-    const wallPredictRight = wallPredictLeft + wallRect.width;
-    const wallPredictBottom = wallPredictTop + wallRect.height; 
 
-    const overlapX = getProjOverlap(htbxRect.left, htbxRect.right, wallPredictLeft, wallPredictRight);
-    const overlapY = getProjOverlap(htbxRect.bottom, htbxRect.top, wallPredictBottom, wallPredictTop);
+    const htbxPredictLeft = nextX;
+    const htbxPredictTop = nextY;
+    const htbxPredictRight = htbxPredictLeft + htbxRect.width;
+    const htbxPredictBottom = htbxPredictTop + htbxRect.height;
 
-    const centerHtbx = { x: (htbxRect.left + htbxRect.right) / 2, y: (htbxRect.top + htbxRect.bottom) / 2 };
-    const centerWall = { x: (wallPredictLeft + wallPredictRight) / 2, y: (wallPredictTop + wallPredictBottom) / 2 };
+    const wallLeft = getPagePosition(wall).x;
+    const wallTop = getPagePosition(wall).y;
+    const wallRight = wallLeft + wallRect.width;
+    const wallBottom = wallTop + wallRect.height; 
+
+    const overlapX = getProjOverlap(htbxPredictLeft, htbxPredictRight, wallLeft, wallRight);
+    const overlapY = getProjOverlap(htbxPredictBottom, htbxPredictTop, wallBottom, wallTop);
+
+    const centerHtbx = { x: (htbxPredictLeft + htbxPredictRight) / 2, y: (htbxPredictTop + htbxPredictBottom) / 2 };
+    const centerWall = { x: (wallLeft + wallRight) / 2, y: (wallTop + wallBottom) / 2 };
     if(overlapX > overlapY) {
         return {
             x: 0,
@@ -117,7 +121,9 @@ function handleOverlap(currentX, currentY, deltaX, deltaY) {
     }
 
     if (currentX !== Math.round(internalX) || currentY !== Math.round(internalY)) {
-        hardScrollTo(internalX, internalY);
+        setPagePosition(document.getElementById("scrollHitbox"), internalX, internalY);
+        console.log("pushing htbx");
+        lastHtbxPos = getPagePosition(document.getElementById("scrollHitbox"));
     }
 }
 
@@ -140,16 +146,12 @@ function hardScrollBy(x,y) {
 
     suppressNextCollisionCheck = true;
     lastHtbxPos = getPagePosition(document.getElementById("scrollHitbox"));
-    internalX = lastHtbxPos.x;
-    internalY = lastHtbxPos.y;
 }
 function hardScrollIntoView(element, args) {
     element.scrollIntoView(args);
 
     suppressNextCollisionCheck = true;
     lastHtbxPos = getPagePosition(document.getElementById("scrollHitbox"));
-    internalX = lastHtbxPos.x;
-    internalY = lastHtbxPos.y;
 }
 
 let walls = document.querySelectorAll('.wall');
@@ -168,6 +170,7 @@ function getPagePosition(element){
 function setPagePosition(element, x, y){
     element.style.top = y + "px";
     element.style.left = x + "px";
+    
 }
 
 function translatePagePosition(element, x, y){
@@ -247,11 +250,14 @@ function update() {
         }
     }
 
-    console.log(internalX);
     lastHtbxPos = htbxPos;
 
+    setPagePosition(document.getElementById("internalScrollHitbox"), internalX, internalY);
 
-
-    document.getElementById("position").textContent = globalThis.scrollX.toString() + ", " + globalThis.scrollY.toString();
+    document.getElementById("hitboxPos").textContent = "hitbox pos: " + htbxPos.x + ", " + htbxPos.y;
+    document.getElementById("hitboxLastPos").textContent = "hitbox last pos: " + lastHtbxPos.x + ", " + lastHtbxPos.y;
+    document.getElementById("internal").textContent = "internal pos: " + internalX + ", " + internalY;
+    document.getElementById("htbxd").textContent = "htbxD: " + htbxD.x + ", " + htbxD.y;
+    document.getElementById("position").textContent = globalThis.scrollX + ", " + globalThis.scrollY;
     window.requestAnimationFrame(update);
 }
