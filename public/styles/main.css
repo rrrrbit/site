@@ -67,14 +67,12 @@ a:hover
 
 #scrollHitbox
 {
-    position: fixed;
-    top: 50%;
-    left: 50%;
+    position: absolute;
     transform: translate(-50%, -50%);
 
-    width: 256px;
-    height: 256px;
-    background: rgba(255, 0, 255, 0.25);
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 0, 255);
 
     z-index: -9999;
 }
@@ -90,7 +88,13 @@ a:hover
 
     pointer-events: none;
     /* background: rgba(0,255,0, 0.1); */
-    
+}
+
+#hudCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #mouseLabel {
