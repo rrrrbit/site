@@ -1,13 +1,14 @@
-body 
-{
+body {
     position: absolute;
     background: black;
     font-family: 'IBM Plex Mono', monospace;
     color: white;
+    margin: 0;
+    padding: 0;
 }
 
 html {
-    scrollbar-width:thin;
+    scrollbar-width: none;
     overscroll-behavior: none;
 }
 
@@ -19,17 +20,14 @@ img {
     image-rendering: crisp-edges;
 }
 
-a
-{
+a {
     color: #00d9ff;
 }
-a:hover
-{
+a:hover {
     color: #0077ff;
 }
 
-.wall 
-{
+.wall {
       position: absolute;
       background: rgba(255, 255, 255);
 }
@@ -68,11 +66,17 @@ a:hover
 #scrollHitbox
 {
     position: absolute;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
 
-    width: 32px;
-    height: 32px;
+    will-change: transform;
+
+    width: 8px;
+    height: 8px;
     background: rgba(255, 0, 255, 0.25);
+
+    /* transition: transform 1s cubic-bezier(0, 0, 0, 1); */
+
 
     z-index: -9999;
 }
@@ -104,9 +108,12 @@ a:hover
 }
 
 #mouseLabel {
-    position: absolute; 
+    position: absolute;
+    top: 0;
+    left: 0;
     z-index: -9999;
-    /* transition: 1s cubic-bezier(0, 1, 0, 1); */
+    will-change: transform;
+    /* transition: transform 1s cubic-bezier(0, 0, 0, 1); */
 }
 
 #homeInner > * { 

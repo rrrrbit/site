@@ -165,14 +165,10 @@ function getPagePosition(element){
 }
 
 function setPagePosition(element, x, y){
-    element.style.top = y + "px";
-    element.style.left = x + "px";
+    element.style.transform = `translate3d(${x}px, ${y}px, 0)`
+    // element.style.top = y + "px";
+    // element.style.left = x + "px";
     
-}
-
-function translatePagePosition(element, x, y){
-    const prev = getPagePosition(element);
-    setPagePosition(element, prev.x + x, prev.y + y);
 }
 
 
@@ -201,8 +197,6 @@ window.addEventListener('mousemove', (e) => {
     const halfHeight = scrollHitbox.getBoundingClientRect().height / 2;
 
     setPagePosition(document.getElementById("mouseLabel"), mousePos.x,mousePos.y);
-    // htbxPosNext.x = mousePos.x - halfWidth;
-    // htbxPosNext.y = mousePos.y - halfHeight;
 
     if(suppressNextCollisionCheck) {
         htbxPos.x = mousePos.x - halfWidth;
@@ -213,7 +207,8 @@ window.addEventListener('mousemove', (e) => {
         moveToAndCollide(mousePos.x - halfWidth, mousePos.y - halfHeight);
     }
 
-    document.getElementById("mouseLabel").innerText = mousePos.x.toString() + ", " + mousePos.y.toString();
+    const mouselabel = document.getElementById("mouseLabel");
+    mouselabel.innerText = "mouse pos: " + mousePos.x.toString() + ", " + mousePos.y.toString();// + "\nmy pos: " + getPagePosition(mouselabel).x + ", " + getPagePosition(mouselabel).y;
 });
 
 let lastScroll = {x: 0, y:0};
@@ -262,8 +257,7 @@ function init() {
     htbxPosNext.y = hitboxPos.y;
     console.log("%chowdy :3", "background: black; font-family: monospace; color: white;")
 
-    //goHome();
-    
+    goHome();
 }
 
 function update() {
