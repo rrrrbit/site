@@ -1,8 +1,20 @@
+<!--
+    TODO:
+
+    serve font locally (has to have block elements)
+    add from godot
+    add sections from godot
+
+    add mobile stuff
+-->
+
+
 <!DOCTYPE html>
 <html>
     <head>
         <title>rbit</title>
         <script src="scripts/main.js"></script>
+        <meta charset="Windows-1252">
 
         <link rel="preconnect" href="https://googleapis.com">
         <link rel="preconnect" href="https://gstatic.com" crossorigin>
@@ -43,8 +55,14 @@
             <div style="position:absolute; top: 100%; left: 50%; transform: translate(-50%, -100%);">up</div>
         </div>
         
-        <div id="testWall"class="wall" style="left: 2000px;    top: 0;      width:512px; height:1900px;"></div>
-        <div id="testWall2"class="wall" style="left: 0px;    top: 2000px;      width:2512px; height:512px;"></div>
-        
+        <!-- WALLS HERE -->
+        <div id = "allWalls">
+            <div class="wall" style="left: 2000px; top: 0; width:512px; height:1900px;"></div>
+            <div class="wall" style="left: 0px; top: 2000px; width:2512px; height:512px;"></div>
+        </div>
+
+        <div id = "allSections">
+            
+        </div>
     </body>
 </html>

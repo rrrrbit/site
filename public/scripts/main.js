@@ -236,7 +236,6 @@ let lastHudCenter = {x: 0, y: 0};
 window.addEventListener('resize', () => {
     const hudCenter = getPagePosition(document.getElementById("hudCenter"));
     const hudCenterD = {x: hudCenter.x - lastHudCenter.x, y: hudCenter.y - lastHudCenter.y};
-    console.log(hudCenterD.x + ", " + hudCenter.y);
     scrollBy(-hudCenterD.x, -hudCenterD.y);
     lastHudCenter = hudCenter;
 });

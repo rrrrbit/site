@@ -7,7 +7,7 @@ body
 }
 
 html {
-    scrollbar-width: none;
+    scrollbar-width:thin;
     overscroll-behavior: none;
 }
 
