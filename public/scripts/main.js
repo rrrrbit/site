@@ -1,7 +1,5 @@
-let lastHtbxPos = {x: 0, y: 0};
-let htbxD = {x: 0, y: 0};
-let internalX = lastHtbxPos.x;
-let internalY = lastHtbxPos.y;
+let htbxPos = {x: 0, y: 0};
+let htbxPosNext = {x: 0, y: 0};
 
 let suppressNextCollisionCheck = false;
 
@@ -26,7 +24,6 @@ function willOverlap(htbx, wall, nextX, nextY) {
         htbxPredictLeft >= wallRight    // wall is completely to the right of htbx 
     );
 }
-
 function getMinimumTranslationVector(htbx, wall, nextX, nextY) {
     const wallRect = wall.getBoundingClientRect();
     const htbxRect = htbx.getBoundingClientRect();
@@ -75,28 +72,29 @@ function getProjOverlap(a0, a1, b0, b1)
     );
 }
 
-function handleOverlap(currentX, currentY, deltaX, deltaY) {
+function moveToAndCollide(targetX, targetY) {
     // console.log("d: "+scrollDeltaX.toString()+", "+scrollDeltaY.toString()) // see scroll delta
 
     const scrollHitbox = document.getElementById('scrollHitbox');
+    const deltaX = targetX - htbxPos.x;
+    const deltaY = targetY - htbxPos.y;
 
-    internalX += deltaX;
-    internalY += deltaY;
     //console.log("internal: "+internalX.toString()+", "+internalY.toString()) // see internal position
 
     // substepped collision checksssss
 
     const distance = Math.hypot(deltaX, deltaY);
 
-    const step = 2;
-    const steps = Math.ceil(distance / step);
+    const step = 1;
+    const steps = Math.max(1, Math.ceil(distance / step));
 
     const stepX = deltaX / steps;
     const stepY = deltaY / steps;
 
-    let predictX = internalX - deltaX;
-    let predictY = internalY - deltaY;
+    let predictX = htbxPos.x;
+    let predictY = htbxPos.y;
     let breakLoop = false;
+    let mtv = {x: 0, y: 0,};
     for(let i = 0; i < steps; i++) {
         predictX += stepX;
         predictY += stepY;
@@ -105,13 +103,11 @@ function handleOverlap(currentX, currentY, deltaX, deltaY) {
             if(willOverlap(scrollHitbox, wall, predictX, predictY)) {
                 console.log("Overlap detected!");
 
-                const mtv = getMinimumTranslationVector(scrollHitbox, wall, predictX, predictY);
+                mtv = getMinimumTranslationVector(scrollHitbox, wall, predictX, predictY);
 
                 predictX += mtv.x;
                 predictY += mtv.y;
-
-                internalX = predictX;
-                internalY = predictY;
+                
                 breakLoop = true;
             }
         }
@@ -120,18 +116,16 @@ function handleOverlap(currentX, currentY, deltaX, deltaY) {
         }
     }
 
-    if (currentX !== Math.round(internalX) || currentY !== Math.round(internalY)) {
-        const d = {
-            x: internalX - getPagePosition(document.getElementById("scrollHitbox")).x,
-            y: internalY - getPagePosition(document.getElementById("scrollHitbox")).y,
-        }
-        
-        // setPagePosition(document.getElementById("scrollHitbox"), internalX, internalY);
-        hardScrollBy(d.x,d.y);
-        
-        console.log("pushing htbx");
-        lastHtbxPos = getPagePosition(document.getElementById("scrollHitbox"));
+    
+    htbxPos.x = predictX;
+    htbxPos.y = predictY;
+    if(targetX !== predictX || targetY !== predictY){
+        scrollBy(predictX - targetX, predictY - targetY);
+        // scrollBy(mtv.x, mtv.y);
     }
+}
+function moveByAndCollide(dx, dy) {
+    moveToAndCollide(htbxPos.x + dx, htbxPos.y + dy);
 }
 
 function hardScrollTo(x, y) {
@@ -142,7 +136,6 @@ function hardScrollTo(x, y) {
     });
     
     suppressNextCollisionCheck = true;
-    lastHtbxPos = getPagePosition(document.getElementById("scrollHitbox"));
 }
 function hardScrollBy(x,y) {
     window.scrollBy({
@@ -152,13 +145,11 @@ function hardScrollBy(x,y) {
     });
 
     suppressNextCollisionCheck = true;
-    lastHtbxPos = getPagePosition(document.getElementById("scrollHitbox"));
 }
 function hardScrollIntoView(element, args) {
     element.scrollIntoView(args);
 
     suppressNextCollisionCheck = true;
-    lastHtbxPos = getPagePosition(document.getElementById("scrollHitbox"));
 }
 
 let walls = document.querySelectorAll('.wall');
@@ -206,17 +197,37 @@ window.addEventListener('DOMContentLoaded', () => {
 let lastMousePos = {x: 0, y: 0};
 window.addEventListener('mousemove', (e) => {
     let mousePos = {x: e.pageX, y: e.pageY,};
-    let mouseD = {x: mousePos.x - lastMousePos.x, y: mousePos.y - lastMousePos.y};
+    const scrollHitbox = document.getElementById("scrollHitbox");
+    const halfWidth = scrollHitbox.getBoundingClientRect().width / 2;
+    const halfHeight = scrollHitbox.getBoundingClientRect().height / 2;
 
     setPagePosition(document.getElementById("mouseLabel"), mousePos.x,mousePos.y);
-    setPagePosition(document.getElementById("scrollHitbox"), mousePos.x, mousePos.y);
+    // htbxPosNext.x = mousePos.x - halfWidth;
+    // htbxPosNext.y = mousePos.y - halfHeight;
+
+    if(suppressNextCollisionCheck) {
+        htbxPos.x = mousePos.x - halfWidth;
+        htbxPos.y = mousePos.y - halfHeight;
+        suppressNextCollisionCheck = false;
+    }
+    else {
+        moveToAndCollide(mousePos.x - halfWidth, mousePos.y - halfHeight);
+    }
+
     document.getElementById("mouseLabel").innerText = mousePos.x.toString() + ", " + mousePos.y.toString();
 });
 
 let lastScroll = {x: 0, y:0};
 window.addEventListener('scroll', (e) => {
     const scrollD = {x: globalThis.scrollX - lastScroll.x, y: globalThis.scrollY - lastScroll.y};
-    translatePagePosition(document.getElementById("scrollHitbox"), scrollD.x + 8, scrollD.y + 8);
+    
+    if(suppressNextCollisionCheck) {
+        htbxPos.x += scrollD.x;
+        htbxPos.y += scrollD.y;
+        suppressNextCollisionCheck = false;
+    } else {
+        moveByAndCollide(scrollD.x, scrollD.y);
+    }
 
     lastScroll = {x: globalThis.scrollX, y: globalThis.scrollY};
 });
@@ -240,9 +251,10 @@ window.addEventListener('resize', (e) => {
 function init() {
     walls = document.querySelectorAll('.wall');
     const hitboxPos = getPagePosition(document.getElementById("scrollHitbox"));
-    internalX = hitboxPos.x;
-    internalY = hitboxPos.y;
-    lastHtbxPos = hitboxPos;
+    htbxPos.x = hitboxPos.x;
+    htbxPos.y = hitboxPos.y;
+    htbxPosNext.x = hitboxPos.x;
+    htbxPosNext.y = hitboxPos.y;
     console.log("%chowdy :3", "background: black; font-family: monospace; color: white;")
 
     //goHome();
@@ -250,27 +262,9 @@ function init() {
 }
 
 function update() {
-    const htbxPos = getPagePosition(document.getElementById("scrollHitbox"));
-    htbxD = {x: htbxPos.x - lastHtbxPos.x, y: htbxPos.y - lastHtbxPos.y};
-
-    if(htbxD.x !== 0 || htbxD.y !== 0){
-        if(suppressNextCollisionCheck) {
-            suppressNextCollisionCheck = false;
-            internalX = htbxPos.x;
-            internalY = htbxPos.y;
-        } else {
-            handleOverlap(htbxPos.x, htbxPos.y, htbxD.x, htbxD.y);
-        }
-    }
-     
-    lastHtbxPos = getPagePosition(document.getElementById("scrollHitbox"));
-
-    setPagePosition(document.getElementById("internalScrollHitbox"), internalX, internalY);
+    setPagePosition(document.getElementById("scrollHitbox"), htbxPos.x, htbxPos.y);
 
     document.getElementById("hitboxPos").textContent = "hitbox pos: " + htbxPos.x + ", " + htbxPos.y;
-    document.getElementById("hitboxLastPos").textContent = "hitbox last pos: " + lastHtbxPos.x + ", " + lastHtbxPos.y;
-    document.getElementById("internal").textContent = "internal pos: " + internalX + ", " + internalY;
-    document.getElementById("htbxd").textContent = "htbxD: " + htbxD.x + ", " + htbxD.y;
-    document.getElementById("position").textContent = globalThis.scrollX + ", " + globalThis.scrollY;
+    document.getElementById("position").textContent = "scroll: " + globalThis.scrollX + ", " + globalThis.scrollY;
     window.requestAnimationFrame(update);
 }
