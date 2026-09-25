@@ -121,7 +121,14 @@ function handleOverlap(currentX, currentY, deltaX, deltaY) {
     }
 
     if (currentX !== Math.round(internalX) || currentY !== Math.round(internalY)) {
-        setPagePosition(document.getElementById("scrollHitbox"), internalX, internalY);
+        const d = {
+            x: internalX - getPagePosition(document.getElementById("scrollHitbox")).x,
+            y: internalY - getPagePosition(document.getElementById("scrollHitbox")).y,
+        }
+        
+        // setPagePosition(document.getElementById("scrollHitbox"), internalX, internalY);
+        hardScrollBy(d.x,d.y);
+        
         console.log("pushing htbx");
         lastHtbxPos = getPagePosition(document.getElementById("scrollHitbox"));
     }
@@ -232,6 +239,10 @@ window.addEventListener('resize', (e) => {
 
 function init() {
     walls = document.querySelectorAll('.wall');
+    const hitboxPos = getPagePosition(document.getElementById("scrollHitbox"));
+    internalX = hitboxPos.x;
+    internalY = hitboxPos.y;
+    lastHtbxPos = hitboxPos;
     console.log("%chowdy :3", "background: black; font-family: monospace; color: white;")
 
     //goHome();
@@ -245,12 +256,14 @@ function update() {
     if(htbxD.x !== 0 || htbxD.y !== 0){
         if(suppressNextCollisionCheck) {
             suppressNextCollisionCheck = false;
+            internalX = htbxPos.x;
+            internalY = htbxPos.y;
         } else {
             handleOverlap(htbxPos.x, htbxPos.y, htbxD.x, htbxD.y);
         }
     }
-
-    lastHtbxPos = htbxPos;
+     
+    lastHtbxPos = getPagePosition(document.getElementById("scrollHitbox"));
 
     setPagePosition(document.getElementById("internalScrollHitbox"), internalX, internalY);
 
