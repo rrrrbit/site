@@ -121,7 +121,6 @@ function moveToAndCollide(targetX, targetY) {
     htbxPos.y = predictY;
     if(targetX !== predictX || targetY !== predictY){
         scrollBy(predictX - targetX, predictY - targetY);
-        // scrollBy(mtv.x, mtv.y);
     }
 }
 function moveByAndCollide(dx, dy) {
@@ -218,7 +217,7 @@ window.addEventListener('mousemove', (e) => {
 });
 
 let lastScroll = {x: 0, y:0};
-window.addEventListener('scroll', (e) => {
+window.addEventListener('scroll', () => {
     const scrollD = {x: globalThis.scrollX - lastScroll.x, y: globalThis.scrollY - lastScroll.y};
     
     if(suppressNextCollisionCheck) {
@@ -229,10 +228,17 @@ window.addEventListener('scroll', (e) => {
         moveByAndCollide(scrollD.x, scrollD.y);
     }
 
+    lastHudCenter = getPagePosition(document.getElementById("hudCenter"));
     lastScroll = {x: globalThis.scrollX, y: globalThis.scrollY};
 });
-window.addEventListener('resize', (e) => {
 
+let lastHudCenter = {x: 0, y: 0};
+window.addEventListener('resize', () => {
+    const hudCenter = getPagePosition(document.getElementById("hudCenter"));
+    const hudCenterD = {x: hudCenter.x - lastHudCenter.x, y: hudCenter.y - lastHudCenter.y};
+    console.log(hudCenterD.x + ", " + hudCenter.y);
+    scrollBy(-hudCenterD.x, -hudCenterD.y);
+    lastHudCenter = hudCenter;
 });
 
 
@@ -266,5 +272,6 @@ function update() {
 
     document.getElementById("hitboxPos").textContent = "hitbox pos: " + htbxPos.x + ", " + htbxPos.y;
     document.getElementById("position").textContent = "scroll: " + globalThis.scrollX + ", " + globalThis.scrollY;
+    document.getElementById("hudCenterPos").textContent = "hudCenter: " + lastHudCenter.x + ", " + lastHudCenter.y;
     window.requestAnimationFrame(update);
 }
