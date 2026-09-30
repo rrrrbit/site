@@ -3,6 +3,8 @@ let htbxPosNext = {x: 0, y: 0};
 
 let suppressNextCollisionCheck = false;
 
+let walls = document.querySelectorAll('wall-');
+
 function willOverlap(htbx, wall, nextX, nextY) {
     const wallRect = wall.getBoundingClientRect();
     const htbxRect = htbx.getBoundingClientRect();
@@ -127,6 +129,10 @@ function moveByAndCollide(dx, dy) {
     moveToAndCollide(htbxPos.x + dx, htbxPos.y + dy);
 }
 
+
+
+
+
 function hardScrollTo(x, y) {
     window.scrollTo({
         left: x,
@@ -151,7 +157,10 @@ function hardScrollIntoView(element, args) {
     suppressNextCollisionCheck = true;
 }
 
-let walls = document.querySelectorAll('.wall');
+
+
+
+
 
 function goHome() {
     hardScrollIntoView(document.getElementById('worldCenter'), {behavior: "instant", block: "center", inline: "center"});
@@ -249,7 +258,7 @@ window.addEventListener('resize', () => {
 
 
 function init() {
-    walls = document.querySelectorAll('.wall');
+    walls = document.querySelectorAll('wall-');
     const hitboxPos = getPagePosition(document.getElementById("scrollHitbox"));
     htbxPos.x = hitboxPos.x;
     htbxPos.y = hitboxPos.y;
