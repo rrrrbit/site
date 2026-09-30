@@ -163,6 +163,7 @@ function hardScrollIntoView(element, args) {
 
 
 function goHome() {
+    console.log("try to go home");
     hardScrollIntoView(document.getElementById('worldCenter'), {behavior: "instant", block: "center", inline: "center"});
 }
 
@@ -193,7 +194,7 @@ function setPagePosition(element, x, y){
 
 
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
     init();
     window.requestAnimationFrame(update);
 });

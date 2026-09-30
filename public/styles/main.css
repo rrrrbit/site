@@ -48,11 +48,19 @@ a:hover {
 }
 
 #homeBadges {
-    border: 1px solid white;
+    outline: 1px solid white;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
     flex-basis: 30%;
     max-height: 30%;
     overflow-y: scroll;
+    scrollbar-width: none;
     width: 176px;
+}
+
+#homeBadges img {
+    display: block;
 }
 
 #home {
