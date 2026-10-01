@@ -1,3 +1,6 @@
+@import "generics.css";
+@import "content.css";
+
 @property --thinPadding {
   syntax: "<length>";
   inherits: true;
@@ -20,6 +23,10 @@ html {
     scrollbar-width: none;
     overscroll-behavior: none;
     scrollbar-color: rgba(255, 255, 255, 1) rgba(0,0,0,0);
+
+    --thinPadding: 8px;
+    --thickPaddingX: 2ch;
+    --thickPaddingY: 1lh;
 }
 
 body {
@@ -39,68 +46,11 @@ body {
         "SW S SE"
         ;
 
-    grid-template-rows: 1fr auto 1fr;
-    grid-template-columns: 1fr auto 1fr;
-
-    --thickPaddingX: 2ch;
-    --thickPaddingY: 1lh;
+    grid-template-rows: minmax(0, 1fr) var(--origin-height, auto) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) var(--origin-width, auto) minmax(0, 1fr);
 }
 
-ascii-art {
-    white-space: pre;
-    margin: 0;
-    padding: 0;
-}
 
-wall- {
-    display: block;
-    position: absolute;
-    background: rgba(255, 255, 255);
-}
-
-section {
-    position: absolute;
-}
-
-table {
-    border-collapse: collapse;
-}
-
-tr {
-    outline: 1px solid white;
-}
-
-button {
-    pointer-events: all;
-}
-
-img {
-    image-rendering: crisp-edges;
-}
-
-a {
-    color: #00d9ff;
-}
-a:hover {
-    color: #0077ff;
-}
-
-.window {
-    outline: 1px solid white;
-    display: grid;
-    grid-template-rows: auto 1fr;
-}
-
-.window-header {
-    outline: 1px solid white;
-    padding: var(--thinPadding);
-}
-
-.window-content {
-    padding: var(--thinPadding);
-    max-width: 100%;
-    max-height: 100%;
-}
 
 #O {
     position: relative;
@@ -127,7 +77,7 @@ a:hover {
 
 #S{
     position: relative;
-
+    min-width: 0;
     padding: var(--thickPaddingY) var(--thickPaddingX);
     grid-area: S;
 }
@@ -168,69 +118,6 @@ a:hover {
     grid-area: SW;
 }
 
-#homeInner {
-    display: flex;
-    position: absolute;
-    max-width: fit-content;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    /* background: rgb(0, 0, 255, 0.25); */
-
-}
-
-#homeBadges {
-    position: relative;
-    box-sizing: border-box;
-    width: calc(88px * 2 + 10px + var(--thinPadding) * 2);
-    max-height: 256px;
-    grid-area: 3 / 1 / 4 / 1;
-    align-self: end;
-}
-
-#homeBadgesInner {
-    scrollbar-width: thin;
-    overflow-y: scroll;
-    
-    min-height: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0;
-    
-}
-
-#homeBadges img {
-    display: block;
-}
-
-#about-me {
-    max-width: 256px;
-    max-height: fit-content;
-    overflow:visible;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #worldCenter {
     position: absolute;
     top: 50%;
@@ -238,6 +125,16 @@ a:hover {
     transform: translate(-50%, -50%);
     background: rgba(255, 255, 255, 0);
 }
+
+
+
+
+
+
+
+
+
+
 
 #scrollHitbox
 {

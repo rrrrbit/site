@@ -1,0 +1,40 @@
+ascii-art {
+    white-space: pre;
+    margin: 0;
+    padding: 0;
+}
+
+wall- {
+    display: block;
+    position: absolute;
+    background: rgba(255, 255, 255);
+}
+
+
+
+section {
+    position: absolute;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tr {
+    outline: 1px solid white;
+}
+
+button {
+    pointer-events: all;
+}
+
+img {
+    image-rendering: crisp-edges;
+}
+
+a {
+    color: #00d9ff;
+}
+a:hover {
+    color: #0077ff;
+}

@@ -11,128 +11,130 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>rbit</title>
-        <script src="scripts/main.js"></script>
-        <meta charset="UTF-8">
-
-        <link rel="preconnect" href="https://googleapis.com">
-        <link rel="preconnect" href="https://gstatic.com" crossorigin>
-
-        <link rel="stylesheet" href="styles/main.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono">
-    </head>
+<head>
+    <title>rbit</title>
+    <meta charset="UTF-8">
     
-    <body style="width: 128000px;   height:128000px;">
-        <div id="worldCenter"></div>
-        <div id="scrollHitbox"></div>
-        <div id = "mouseLabel">meouse</div>
-        <div id="hud">
-            <div id="hudCenter"></div>
-            <div id="position">0,0</div><br>
-            <div id="hitboxPos">0,0</div>
-            <div id="hudCenterPos">0,0</div>
-            <button id="homeButton" onclick="goHome()">reset</button>
-        </div>
-        
-        <div id="O">
-            origin
-            <div id="homeInner">
-                <ascii-art>██████████  
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono">
+    
+    <script src="scripts/main.js"></script>
+    <script src="scripts/cmpnt_window.js" defer></script>
+</head>
+
+<body style="width: 128000px;   height:128000px;">
+    <div id="worldCenter"></div>
+    <div id="scrollHitbox"></div>
+    <div id = "mouseLabel">meouse</div>
+    <div id="hud">
+        <div id="hudCenter"></div>
+        <div id="position">0,0</div><br>
+        <div id="hitboxPos">0,0</div>
+        <div id="hudCenterPos">0,0</div>
+        <button id="homeButton" onclick="goHome()">reset</button>
+    </div>
+    
+    <div id="O">
+        origin
+        <div id="homeInner">
+            <ascii-art>██████████  
 ██      ██  
 ██████████  
 ██  ██      
 ██  ██  ██
 </ascii-art>
-                <div>
-                    hello!!!!!!!!!!!!!!<br>
-                    welcome to the website of rbit/jem<br>
-                    enjoy your stay :3
-                </div>
-            </div>
-
-            <div id="homeBadges" class="window">
-                <div class="window-header"> links & webrings </div>
-                <div id="homeBadgesInner" class="window-content">
-                    <a href="https://celestialspark21.neocities.org/"><img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31"></a>
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                </div>
-            </div>
-
-            <div style="position:absolute; top: 50%; left: 2ch; transform: translate(0%, -50%);">←<br>←<br>←</div>
-            <div style="position:absolute; top: 50%; left: calc(100% - 2ch); transform: translate(-100%, -50%);">→<br>→<br>→</div>
-            <div style="position:absolute; top: 1lh; left: 50%; transform: translate(-50%, 0%);">↑↑↑</div>
-            <div style="position:absolute; top: calc(100% - 1lh); left: 50%; transform: translate(-50%, -100%);">↓↓↓</div>
-        </div>
-
-        <div id = "N">
-            north highway
-        </div>
-
-        <div id = "S">
-            <div class="window" id="about-me">
-                <div class="window-header"> about me </div>
-                <div class="window-content">
-                    lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper.
-                </div>
+            <div>
+                hello!!!!!!!!!!!!!!<br>
+                welcome to the website of rbit/jem<br>
+                enjoy your stay :3
             </div>
         </div>
 
-        <div id = "E">
-            east highway
-        </div>
+        <window- id="homeBadges">
+            <div slot="title"> links & webrings </div>
+            <div id="homeBadgesInner" slot="content">
+                <a href="https://celestialspark21.neocities.org/"><img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31"></a>
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+            </div>
+        </window->
 
-        <div id = "W">
-            west highway
-        </div>
+        <div style="position:absolute; top: 50%; left: 2ch; transform: translate(0%, -50%);">←<br>←<br>←</div>
+        <div style="position:absolute; top: 50%; left: calc(100% - 2ch); transform: translate(-100%, -50%);">→<br>→<br>→</div>
+        <div style="position:absolute; top: 1lh; left: 50%; transform: translate(-50%, 0%);">↑↑↑</div>
+        <div style="position:absolute; top: calc(100% - 1lh); left: 50%; transform: translate(-50%, -100%);">↓↓↓</div>
+    </div>
 
-        <div id = "NE">
-            northeast corner
-        </div>
+    <div id = "N">
+        north highway
+    </div>
 
-        <div id = "NW">
-            northwest corner
-        </div>
+    <div id = "S">
+        <window- id="about-me">
+            <span slot="title"> about me </span>
+            <span slot="content">
+                lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper.
+            </span>
+        </window->
+    </div>
 
-        <div id = "SE">
-            southeast corner
-        </div>
+    <div id = "E">
+        east highway
+    </div>
 
-        <div id = "SW">
-            southwest corner
-        </div>
+    <div id = "W">
+        west highway
+    </div>
 
-        <!-- WALLS HERE -->
-        <div id = "allWalls">
-            
-        </div>
+    <div id = "NE">
+        northeast corner
+    </div>
 
-        <div id = "allSections">
-            
-        </div>
-    </body>
+    <div id = "NW">
+        northwest corner
+    </div>
+
+    <div id = "SE">
+        southeast corner
+    </div>
+
+    <div id = "SW">
+        southwest corner
+    </div>
+
+    <!-- WALLS HERE -->
+    <div id = "allWalls">
+        
+    </div>
+
+    <div id = "allSections">
+        
+    </div>
+</body>
 </html>

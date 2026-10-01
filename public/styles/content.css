@@ -1,0 +1,39 @@
+#homeInner {
+    display: flex;
+    position: absolute;
+    max-width: fit-content;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* background: rgb(0, 0, 255, 0.25); */
+
+}
+
+#homeBadges {
+    position: relative;
+    box-sizing: border-box;
+    width: calc(88px * 2 + 10px + var(--thinPadding) * 2);
+    max-height: 256px;
+    grid-area: 3 / 1 / 4 / 1;
+    align-self: end;
+}
+
+#homeBadgesInner {
+    scrollbar-width: thin;
+    overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    gap: 0;
+}
+
+#homeBadges img {
+    display: block;
+}
+
+#about-me {
+    max-width: 70%;
+    max-height: fit-content;
+    overflow: visible;
+}
