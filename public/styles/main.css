@@ -1,3 +1,21 @@
+@property --thinPadding {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 8px;
+}
+
+@property --thickPaddingX {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 11pt;
+}
+
+@property --thickPaddingY {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 11pt;
+}
+
 html {
     scrollbar-width: none;
     overscroll-behavior: none;
@@ -9,7 +27,7 @@ body {
     background: black;
     font-family: monospace;
     line-height: 100%;
-    font-size: 14pt;
+    font-size: 11pt;
     color: white;
     margin: 0;
     padding: 0;
@@ -23,6 +41,9 @@ body {
 
     grid-template-rows: 1fr auto 1fr;
     grid-template-columns: 1fr auto 1fr;
+
+    --thickPaddingX: 2ch;
+    --thickPaddingY: 1lh;
 }
 
 ascii-art {
@@ -65,19 +86,20 @@ a:hover {
 }
 
 .window {
+    outline: 1px solid white;
     display: grid;
     grid-template-rows: auto 1fr;
 }
 
 .window-header {
     outline: 1px solid white;
-    padding: 4px;
+    padding: var(--thinPadding);
 }
 
 .window-content {
-    outline: 1px solid white;
-    overflow-y: scroll;
-    padding: 4px;
+    padding: var(--thinPadding);
+    max-width: 100%;
+    max-height: 100%;
 }
 
 #O {
@@ -90,7 +112,7 @@ a:hover {
     
     /* background: rgb(255, 0, 0, 0.25); */
     box-sizing: border-box;
-    padding: 1lh 2ch;
+    padding: var(--thickPaddingY) var(--thickPaddingX);
 
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
@@ -98,35 +120,51 @@ a:hover {
 }
 
 #N{
+    position: relative;
+
     grid-area: N;
-    justify-content: flex-end;
 }
 
 #S{
+    position: relative;
+
+    padding: var(--thickPaddingY) var(--thickPaddingX);
     grid-area: S;
 }
 
 #E{
+    position: relative;
+
     grid-area: E;
 }
 
 #W{
+    position: relative;
+
     grid-area: W;
 }
 
 #NE{
+    position: relative;
+
     grid-area: NE;
 }
 
 #NW{
+    position: relative;
+
     grid-area: NW;
 }
 
 #SE{
+    position: relative;
+
     grid-area: SE;
 }
 
 #SW{
+    position: relative;
+
     grid-area: SW;
 }
 
@@ -145,7 +183,7 @@ a:hover {
 #homeBadges {
     position: relative;
     box-sizing: border-box;
-    width: calc(88px * 2 + 10px + 8px);
+    width: calc(88px * 2 + 10px + var(--thinPadding) * 2);
     max-height: 256px;
     grid-area: 3 / 1 / 4 / 1;
     align-self: end;
@@ -165,6 +203,31 @@ a:hover {
 #homeBadges img {
     display: block;
 }
+
+#about-me {
+    max-width: 256px;
+    max-height: fit-content;
+    overflow:visible;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
