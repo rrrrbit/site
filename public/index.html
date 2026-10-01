@@ -35,7 +35,8 @@
             <button id="homeButton" onclick="goHome()">reset</button>
         </div>
         
-        <div id="home">
+        <div id="O">
+            origin
             <div id="homeInner">
                 <ascii-art>██████████  
 ██      ██  
@@ -46,54 +47,86 @@
                 <div>
                     hello!!!!!!!!!!!!!!<br>
                     welcome to the website of rbit/jem<br>
-                    enjoy your stay :3<br>
-                    (make font local pls google doesnt serve the block element chars :[)
+                    enjoy your stay :3
                 </div>
             </div>
 
-            <table id="homeBadges">
-                <tr><td>badges!!</td></tr>
-
-                <tr><td><div id="homeBadgesInner">
-                <a href="https://celestialspark21.neocities.org/"><img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31"></a>
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
-                </div></td></tr>
-            </table>
+            <div id="homeBadges" class="window">
+                <div class="window-header">
+                    badges!!
+                    
+                </div>
+                <div id="homeBadgesInner" class="window-content">
+                    <a href="https://celestialspark21.neocities.org/"><img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31"></a>
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                    <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                </div>
+            </div>
 
             <div style="position:absolute; top: 50%; left: 2ch; transform: translate(0%, -50%);">←<br>←<br>←</div>
             <div style="position:absolute; top: 50%; left: calc(100% - 2ch); transform: translate(-100%, -50%);">→<br>→<br>→</div>
             <div style="position:absolute; top: 1lh; left: 50%; transform: translate(-50%, 0%);">↑↑↑</div>
             <div style="position:absolute; top: calc(100% - 1lh); left: 50%; transform: translate(-50%, -100%);">↓↓↓</div>
         </div>
-        
+
+        <div id = "N">
+            north highway
+        </div>
+
+        <div id = "S">
+            south highway
+        </div>
+
+        <div id = "E">
+            east highway
+        </div>
+
+        <div id = "W">
+            west highway
+        </div>
+
+        <div id = "NE">
+            northeast corner
+        </div>
+
+        <div id = "NW">
+            northwest corner
+        </div>
+
+        <div id = "SE">
+            southeast corner
+        </div>
+
+        <div id = "SW">
+            southwest corner
+        </div>
+
         <!-- WALLS HERE -->
         <div id = "allWalls">
-            <wall- style="top:0.0px; left:2000.0px; width:512.0px; height:1900.0px;"></wall->
-            <wall- style="top:2000.0px; left:0.0px; width:2512.0px; height:512.0px;"></wall->
-            <wall- style="top:62000.0px; left:62000.0px; width:4000.0px; height:512.0px;"></wall->
-            <wall- style="top:65488.0px; left:62000.0px; width:4000.0px; height:512.0px;"></wall->
-            <wall- style="top:62000.0px; left:62000.0px; width:512.0px; height:4000.0px;"></wall->
-            <wall- style="top:62000.0px; left:65488.0px; width:512.0px; height:4000.0px;"></wall->
+            
         </div>
 
         <div id = "allSections">

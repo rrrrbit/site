@@ -1,6 +1,7 @@
 html {
     scrollbar-width: none;
     overscroll-behavior: none;
+    scrollbar-color: rgba(255, 255, 255, 1) rgba(0,0,0,0);
 }
 
 body {
@@ -12,6 +13,16 @@ body {
     color: white;
     margin: 0;
     padding: 0;
+
+    display: grid;
+    grid-template-areas: 
+        "NW N NE" 
+        "W O E" 
+        "SW S SE"
+        ;
+
+    grid-template-rows: 1fr auto 1fr;
+    grid-template-columns: 1fr auto 1fr;
 }
 
 ascii-art {
@@ -53,45 +64,70 @@ a:hover {
     color: #0077ff;
 }
 
-#homeBadges {
-    
-    width: 178px;
-    /* outline: 1px solid white; */
-    flex-basis: 30%;
-    max-height: 30%;
-
-    
+.window {
+    display: grid;
+    grid-template-rows: auto 1fr;
 }
 
-#homeBadgesInner {
-    max-height: 100%;
+.window-header {
+    outline: 1px solid white;
+    padding: 4px;
+}
+
+.window-content {
+    outline: 1px solid white;
     overflow-y: scroll;
-    scrollbar-width: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0;
-    
+    padding: 4px;
 }
 
-#homeBadges img {
-    display: block;
-}
+#O {
+    position: relative;
 
-#home {
-    position: absolute;
+    grid-area: O;
     width: 100vw;
     height: 100vh;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+
     
     /* background: rgb(255, 0, 0, 0.25); */
-    display: flex;
     box-sizing: border-box;
     padding: 1lh 2ch;
-    flex-direction: column;    /* Stack contents vertically */
-    justify-content: flex-end; /* Push items to the bottom */
-    align-items: flex-start; 
+
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#N{
+    grid-area: N;
+    justify-content: flex-end;
+}
+
+#S{
+    grid-area: S;
+}
+
+#E{
+    grid-area: E;
+}
+
+#W{
+    grid-area: W;
+}
+
+#NE{
+    grid-area: NE;
+}
+
+#NW{
+    grid-area: NW;
+}
+
+#SE{
+    grid-area: SE;
+}
+
+#SW{
+    grid-area: SW;
 }
 
 #homeInner {
@@ -105,6 +141,32 @@ a:hover {
     /* background: rgb(0, 0, 255, 0.25); */
 
 }
+
+#homeBadges {
+    position: relative;
+    box-sizing: border-box;
+    width: calc(88px * 2 + 10px + 8px);
+    max-height: 256px;
+    grid-area: 3 / 1 / 4 / 1;
+    align-self: end;
+}
+
+#homeBadgesInner {
+    scrollbar-width: thin;
+    overflow-y: scroll;
+    
+    min-height: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    
+}
+
+#homeBadges img {
+    display: block;
+}
+
+
 
 #worldCenter {
     position: absolute;
