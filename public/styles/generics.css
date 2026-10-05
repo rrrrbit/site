@@ -10,10 +10,10 @@ wall- {
     background: rgba(255, 255, 255);
 }
 
-
-
 section {
+    display: block;
     position: absolute;
+    background: rgba(255, 0, 255, 0.2);
 }
 
 table {

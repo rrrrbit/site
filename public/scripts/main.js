@@ -194,17 +194,7 @@ function setPagePosition(element, x, y){
 
 
 
-function syncOriginDimensions() {
-    const origin = document.getElementById('O');
-    if (!origin || !document.body) return;
 
-    const { width, height } = origin.getBoundingClientRect();
-    document.body.style.setProperty('--origin-width', `${width}px`);
-    document.body.style.setProperty('--origin-height', `${height}px`);
-} // vibe coded
-
-document.addEventListener('DOMContentLoaded', syncOriginDimensions);
-window.addEventListener('resize', syncOriginDimensions);
 
 window.addEventListener('load', () => {
     init();

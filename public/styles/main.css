@@ -1,27 +1,9 @@
 @import "generics.css";
 @import "content.css";
 
-@property --thinPadding {
-  syntax: "<length>";
-  inherits: true;
-  initial-value: 8px;
-}
-
-@property --thickPaddingX {
-  syntax: "<length>";
-  inherits: true;
-  initial-value: 11pt;
-}
-
-@property --thickPaddingY {
-  syntax: "<length>";
-  inherits: true;
-  initial-value: 11pt;
-}
-
 html {
     scrollbar-width: none;
-    overscroll-behavior: none;
+    overscroll-behavior: contain;
     scrollbar-color: rgba(255, 255, 255, 1) rgba(0,0,0,0);
 
     --thinPadding: 8px;
@@ -46,8 +28,10 @@ body {
         "SW S SE"
         ;
 
-    grid-template-rows: minmax(0, 1fr) var(--origin-height, auto) minmax(0, 1fr);
-    grid-template-columns: minmax(0, 1fr) var(--origin-width, auto) minmax(0, 1fr);
+    --ow: 100vw;
+    --oh: 100vh;
+    grid-template-rows: minmax(0, 1fr) var(--oh, auto) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) var(--ow, auto) minmax(0, 1fr);
 }
 
 
@@ -71,51 +55,58 @@ body {
 
 #N{
     position: relative;
-
     grid-area: N;
+    
+    padding: var(--thickPaddingY) var(--thickPaddingX);
 }
 
 #S{
     position: relative;
-    min-width: 0;
-    padding: var(--thickPaddingY) var(--thickPaddingX);
     grid-area: S;
+
+    padding: var(--thickPaddingY) var(--thickPaddingX);
 }
 
 #E{
     position: relative;
-
     grid-area: E;
+
+    padding: var(--thickPaddingY) var(--thickPaddingX);
 }
 
 #W{
     position: relative;
-
     grid-area: W;
+
+    padding: var(--thickPaddingY) var(--thickPaddingX);
 }
 
 #NE{
     position: relative;
-
     grid-area: NE;
+
+    padding: var(--thickPaddingY) var(--thickPaddingX);
 }
 
 #NW{
     position: relative;
-
     grid-area: NW;
+
+    padding: var(--thickPaddingY) var(--thickPaddingX);
 }
 
 #SE{
     position: relative;
-
     grid-area: SE;
+
+    padding: var(--thickPaddingY) var(--thickPaddingX);
 }
 
 #SW{
     position: relative;
-
     grid-area: SW;
+
+    padding: var(--thickPaddingY) var(--thickPaddingX);
 }
 
 #worldCenter {
