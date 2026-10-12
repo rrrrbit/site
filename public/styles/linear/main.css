@@ -1,0 +1,22 @@
+@import "generics.css";
+@import "content.css";
+
+html {
+    scrollbar-width: none;
+    overscroll-behavior: contain;
+    scrollbar-color: rgba(255, 255, 255, 1) rgba(0,0,0,0);
+
+    --thinPadding: 8px;
+    --thickPaddingX: 2ch;
+    --thickPaddingY: 1lh;
+}
+
+body {
+    background: black;
+    font-family: monospace;
+    line-height: 100%;
+    font-size: 1rem;
+    color: white;
+    margin: 0;
+    padding: var(--thickPaddingY) var(--thickPaddingX);
+}
