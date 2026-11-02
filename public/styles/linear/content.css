@@ -16,17 +16,14 @@
 }
 
 #portfolio {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    height: fit-content;
-    width: 256px;
+    height: 512px;
+    width: 512px;
 }
 
 #portfolio > div[slot="content"] {
     text-align: center;
+    text-justify: center;
+    padding: var(--thickPaddingY) var(--thickPaddingX);
 }
 
 #portfolio > div[slot="content"] > .locked {

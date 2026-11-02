@@ -9,6 +9,7 @@ template.innerHTML = `
             grid-template-rows: auto 1fr;
             grid-template-columns: minmax(0, 1fr);
             max-height: inherit;
+            height: 100%;
             min-height: 0;
         }
 
