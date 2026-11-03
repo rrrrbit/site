@@ -11,13 +11,9 @@
     padding: var(--thickPaddingY) var(--thickPaddingX);
 }
 
-#about-me {
-    padding: var(--thickPaddingY) var(--thickPaddingX);
-}
-
 #portfolio {
-    height: 512px;
-    width: 512px;
+    height: auto;
+    width: fit-content;
 }
 
 #portfolio > div[slot="content"] {
@@ -27,5 +23,5 @@
 }
 
 #portfolio > div[slot="content"] > .locked {
-    color: gray;
+    color: rgb(32,32,32);
 }
