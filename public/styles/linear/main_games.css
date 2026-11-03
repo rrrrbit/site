@@ -1,0 +1,13 @@
+@import "generics.css";
+@import "main.css";
+
+#games-grid {
+    display: flex;
+    gap: var(--thickPaddingY) var(--thickPaddingX);
+    flex-wrap: wrap;
+}
+
+.game-card {
+    min-width: 128px;
+    height: 128px;
+}
