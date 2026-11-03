@@ -1,0 +1,131 @@
+<!--
+    TODO:
+    add mobile stuff
+    about me
+    about this site
+    
+-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>rbit</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono">
+    
+    <link rel="icon" type="image/x-icon" href="assets/favicon (1).ico">
+
+    <script src="scripts/main.js"></script>
+    <script src="scripts/cmpnt_window.js" defer></script>
+</head>
+
+<body style="width: 128000px;   height:128000px;">
+    <div id="worldCenter"></div>
+    <div id="scrollHitbox"></div>
+    <div id = "mouseLabel">meouse</div>
+    <div id="hud">
+        <div id="hudCenter"></div>
+        <div id="position">0,0</div><br>
+        <div id="hitboxPos">0,0</div>
+        <div id="hudCenterPos">0,0</div>
+        <button id="homeButton" onclick="goHome()">reset</button>
+    </div>
+    
+    <div id="O">
+        <!-- origin -->
+        <div id="homeInner">
+            <ascii-art>██████████  
+██      ██  
+██████████  
+██  ██      
+██  ██  ██
+</ascii-art>
+        </div>
+
+        <window- id="homeBadges">
+            <div slot="title">buttons</div>
+            <div id="homeBadgesInner" slot="content">
+                <a href="https://celestialspark21.neocities.org/"><img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31"></a>
+                <iframe src="//incr.easrng.net/badge?key=changeme" style="background: url(//incr.easrng.net/bg.gif)" title="increment badge" width="88" height="31" frameborder="0"></iframe>
+                <a href="https://corru.observer/"><img src="https://corru.observer/8831.gif" width="88" height="31"></a>
+                <a href="https://irony-machine.neocities.org/"><img src="https://irony-machine.neocities.org/buttons/buttons/irony-machine2.gif" width="88" height="31"></a>
+                <img src="https://otherswap.neocities.org/images/buttons/83_kris.png" width="88" height="31">
+                <a href="https://www.sbnation.com/a/17776-football"><img src="https://rose.systems/88x31/i/17776.gif" width="88" height="31"></a>
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+                <img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31">
+            </div>
+        </window->
+
+        <window- id="socials">
+            <div slot="title">socials</div>
+            <div id="socialsInner" slot="content">
+                <a href="https://rrbit.itch.io/"><img src="https://images.seeklogo.com/logo-png/64/2/itch-io-logo-png_seeklogo-649245.png" width="auto" height="31"></a>
+                <a href="https://youtube.com/@_rbit"><img src="assets/yt_icon_red_digital.png" width="auto" height="31"></a>
+                <a href="https://reddit.com/user/rbit_/"><img src="assets/Reddit_Icon_1Color_Silhouette.png" width="auto" height="31"></a>
+                <a href="https://ko-fi.com/rbit_/"><img src="assets\kofi_symbol.png" width="auto" height="31"></a>
+                <a href="https://rbit.bandcamp.com/"><img src="https://s4.bcbits.com/vite/corp-pages/client/v1/en/assets/bandcamp-button-circle-aqua-512-DR-rk-YT.png" width="auto" height="31"></a>
+                <a href="https://linkedin.com/in/jon-emmanuel-macagba-88614a38b"><img src="assets/LI-In-Bug.png" width="auto" height="31"></a>
+                <a href="https://rbit.bsky.social/"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original" width="auto" height="31"></a>
+                <a href="https://dsc.gg/rbit"><img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/66e3d80db9971f10a9757c99_Symbol.svg" width="auto" height="31"></a>
+                <a href="https://r-bit.carrd.co/"><img src="https://carrd.com/assets/docs/images/brand/png/icon-color.png" width="auto" height="31"></a>
+                <a href="https://www.twitch.tv/rbiit_"><img src="assets/glitch_flat_purple.png" width="auto" height="31"></a>
+            </div>
+        </window->
+
+        <div style="position:absolute; top: 50%; left: 2ch; transform: translate(0%, -50%);">←<br>←<br>←</div>
+        <div style="position:absolute; top: 50%; left: calc(100% - 2ch); transform: translate(-100%, -50%);">→<br>→<br>→</div>
+        <div style="position:absolute; top: 1lh; left: 50%; transform: translate(-50%, 0%);">↑↑↑</div>
+        <div style="position:absolute; top: calc(100% - 1lh); left: 50%; transform: translate(-50%, -100%); text-align: center;">about me<br>↓↓↓</div>
+    </div>
+
+    <div id = "N">
+        <!-- north highway -->
+    </div>
+
+    <div id = "S">
+        <window- id="about-me">
+            <span slot="title"> about me </span>
+            <span slot="content">
+                lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper.
+            </span>
+        </window->
+    </div>
+
+    <div id = "E">
+        <!-- east highway -->
+    </div>
+
+    <div id = "W">
+        <!-- west highway -->
+    </div>
+
+    <div id="NW">
+        <!-- northwest -->
+    </div>
+
+    <div id="NE">
+        <!-- northeast -->
+    </div>
+
+    <div id="SW">
+        <!-- southwest -->
+    </div>
+    
+    <div id="SE">
+        <!-- southeast -->
+    </div>
+
+</body>
+</html>

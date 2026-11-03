@@ -10,7 +10,9 @@ template.innerHTML = `
             grid-template-columns: minmax(0, 1fr);
             max-height: inherit;
             height: 100%;
+            width: 100%;
             min-height: 0;
+            min-width: 0;
         }
 
         .window-header {
@@ -22,6 +24,7 @@ template.innerHTML = `
             padding: var(--thinPadding);
             box-sizing: border-box;
             min-height: 0;
+            min-width: 0;
             max-width: 100%;
             max-height: 100%;
         }

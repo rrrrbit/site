@@ -9,6 +9,10 @@
 
 #content {
     padding: var(--thickPaddingY) var(--thickPaddingX);
+    display: flex;
+    gap: var(--thickPaddingX) var(--thickPaddingY);
+    flex-wrap: wrap;
+
 }
 
 #portfolio {
@@ -23,5 +27,46 @@
 }
 
 #portfolio > div[slot="content"] > .locked {
-    color: rgb(32,32,32);
+    color: rgb(64,64,64);
+}
+
+#about-me {
+    width: 320px;
+}
+
+#socials {
+    width: calc(88px * 2 + 16px + var(--thinPadding) * 2);
+    justify-self: end;
+    height: fit-content;
+}
+
+#socials > div[slot="content"] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 4px;
+    flex-basis: 100%;
+}
+
+#deco0 {
+    width: fit-content;
+    margin-left: auto;
+}
+
+#deco1 {
+    width: fit-content;
+    flex-basis: 100%;
+}
+
+.ascii-art {
+    white-space: pre;
+    margin: 0;
+    padding: 0;
+}
+
+.flip {
+    text-align: right;
+    text-wrap: wrap;
+    word-break: break-all;
+    direction: rtl;
+    unicode-bidi: bidi-override;
 }
