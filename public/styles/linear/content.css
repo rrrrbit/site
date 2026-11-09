@@ -85,3 +85,11 @@
     flex-direction: column;
     gap: var(--thickPaddingY) var(--thickPaddingX)
 }
+
+#deco-title {
+    color: transparent;
+    background-image: url('/public/assets/accent texture light.png');
+    background-repeat: repeat;
+    background-position: center;
+    background-clip: text;
+}

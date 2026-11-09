@@ -14,13 +14,17 @@ button {
     pointer-events: all;
 }
 
-img {
+* {
     image-rendering: crisp-edges;
 }
 
 a {
-    color: #00d9ff;
+    color: white;
 }
 a:hover {
-    color: #0077ff;
+    color: transparent;
+    background-image: url('/public/assets/accent texture light.png');
+    background-repeat: repeat;
+    background-position: center;
+    background-clip: text;
 }
