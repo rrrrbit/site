@@ -8,11 +8,19 @@
 }
 
 .game-card {
-    min-width: 128px;
-    height: 128px;
+    width: 196px;
+    height: 196px;
+    --content-padding: 0px
 }
 
 .game-card > div[slot="content"] {
     background-image: url("/public/assets/MISSING.png");
+    background-color: rgba(255,255,255,0.2);
+    background-blend-mode: lighten;
+    background-size: cover;
     height: 100%;
+}
+
+#testGame > div[slot="content"] {
+    background-image: url("/public/assets/accent\ texture\ light.png");
 }
