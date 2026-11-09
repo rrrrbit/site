@@ -12,10 +12,7 @@
     height: 128px;
 }
 
-#testGame > div[slot = "content"] {
-    background-color: green;
-}
-
-#testGame div[slot="content"] {
-    padding: 0px;
+.game-card > div[slot="content"] {
+    background-image: url("/public/assets/MISSING.png");
+    height: 100%;
 }

@@ -21,7 +21,7 @@ template.innerHTML = `
         }
 
         .window-content {
-            padding: var(--thinPadding);
+            padding: var(--content-padding, var(--thinPadding));
             box-sizing: border-box;
             min-height: 0;
             min-width: 0;
