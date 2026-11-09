@@ -18,6 +18,7 @@ template.innerHTML = `
         .window-header {
             outline: 1px solid white;
             padding: var(--thinPadding);
+            z-index: 1;
         }
 
         .window-content {
@@ -27,6 +28,7 @@ template.innerHTML = `
             min-width: 0;
             max-width: 100%;
             max-height: 100%;
+            z-index: -1;
         }
 
         :host {

@@ -1,7 +1,3 @@
-section {
-    background: rgba(255, 0, 255, 0.2);
-}
-
 table {
     border-collapse: collapse;
 }
@@ -20,6 +16,7 @@ button {
 
 a {
     color: white;
+    text-decoration: underline dotted 1px;
 }
 a:hover {
     color: transparent;
@@ -27,4 +24,4 @@ a:hover {
     background-repeat: repeat;
     background-position: center;
     background-clip: text;
-}
+}   
