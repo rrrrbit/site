@@ -93,3 +93,18 @@
     background-position: center;
     background-clip: text;
 }
+
+#homeBadges {
+    width: calc(88px * 2 + 16px + var(--thinPadding) * 2);
+    height: fit-content;
+    max-height: 196px;
+}
+
+#homeBadges > div[slot="content"] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px 2px;
+    scrollbar-width: thin;
+    overflow-y: scroll;
+    height: 100%;
+}
