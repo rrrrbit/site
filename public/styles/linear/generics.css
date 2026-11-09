@@ -23,7 +23,7 @@ a {
 }
 a:hover {
     color: transparent;
-    background-image: url('/public/assets/accent texture light.png');
+    background-image: url('../../assets/accent texture light.png');
     background-repeat: repeat;
     background-position: center;
     background-clip: text;
