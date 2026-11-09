@@ -18,6 +18,7 @@ a {
     color: white;
     text-decoration: underline dotted 1px;
 }
+
 a:hover {
     color: transparent;
     background-image: url('../../assets/accent texture light.png');
