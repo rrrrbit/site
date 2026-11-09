@@ -14,7 +14,7 @@ html {
 body {
     position: absolute;
     background: black;
-    font-family: "Consolas";
+    font-family: monospace;
     line-height: 100%;
     font-size: 1rem;
     color: white;

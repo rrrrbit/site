@@ -11,3 +11,16 @@
     min-width: 128px;
     height: 128px;
 }
+
+#testGame > div[slot = "content"] {
+    background-color: green;
+}
+
+#testGame div[slot="content"] {
+    padding: 0px;
+}
+
+a .game-card {
+    color: white;
+    text-decoration: none;
+}
