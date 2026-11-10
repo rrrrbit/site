@@ -19,10 +19,11 @@ a {
     text-decoration: underline dotted 1px;
 }
 
-a:hover {
+a:hover, a:hover * {
     color: transparent;
     background-image: url('../../assets/accent texture light.png');
     background-repeat: repeat;
     background-position: center;
     background-clip: text;
-}   
+    background-size: 8px;
+}
