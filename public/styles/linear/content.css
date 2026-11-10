@@ -86,14 +86,6 @@
     gap: var(--thickPaddingY) var(--thickPaddingX)
 }
 
-#deco-title {
-    color: transparent;
-    background-image: url('../../assets/accent texture light.png');
-    background-repeat: repeat;
-    background-position: center;
-    background-clip: text;
-}
-
 #homeBadges {
     width: calc(88px * 2 + 16px + var(--thinPadding) * 2);
     height: fit-content;

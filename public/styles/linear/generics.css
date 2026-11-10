@@ -19,11 +19,32 @@ a {
     text-decoration: underline dotted 1px;
 }
 
-a:hover, a:hover * {
+.accent, a:hover, a:hover * {
     color: transparent;
     background-image: url('../../assets/accent texture light.png');
     background-repeat: repeat;
-    background-position: center;
     background-clip: text;
-    background-size: 8px;
+    background-attachment: fixed;
+}
+
+.hide-deco {
+    text-decoration: none;
+}
+
+a:hover:not(.no-anim), a:hover *:not(.no-anim) {
+    animation: texture-accent-moving 60s linear normal infinite
+}
+
+.accent.anim {
+    animation: texture-accent-moving 60s linear normal infinite
+}
+
+
+@keyframes texture-accent-moving {
+    from {
+        background-position: top;
+    }
+    to {
+        background-position: bottom;
+    }
 }
