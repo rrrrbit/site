@@ -14,14 +14,19 @@ button {
     image-rendering: crisp-edges;
 }
 
-a {
+a, .text-deco {
     color: white;
     text-decoration: underline dotted 1px;
 }
 
 .accent, a:hover, a:hover * {
     color: transparent;
-    background-image: url('../../assets/accent texture light.png');
+    background:
+        linear-gradient(
+            rgba(255,255,255,0.5),
+            rgba(255,255,255,0.5)
+        ),
+        url('../../assets/accent texture light.png');
     background-repeat: repeat;
     background-clip: text;
     background-attachment: fixed;
