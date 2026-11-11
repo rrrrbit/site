@@ -19,6 +19,14 @@ a, .text-deco {
     text-decoration: underline dotted 1px;
 }
 
+p {
+    margin-bottom: 0px;
+}
+
+p:not(p + p) {
+    margin-top: 0px;
+}
+
 .accent, a:hover, a:hover * {
     color: transparent;
     background:
@@ -38,6 +46,13 @@ a, .text-deco {
 
 a:hover:not(.no-anim), a:hover *:not(.no-anim) {
     animation: texture-accent-moving 60s linear normal infinite
+}
+
+.text-long {
+    color: grey;
+    hl- {
+        color: white;
+    }
 }
 
 .accent.anim {

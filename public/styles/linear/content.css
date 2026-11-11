@@ -70,7 +70,11 @@
     display: block;
 }
 
-#deco0, #deco1 {
+#about-me {
+    width: 256px;
+}
+
+#deco0, #deco1, #deco2 {
     min-width: fit-content;
 }
 
@@ -101,3 +105,5 @@
 #socials { animation-delay: 0.6s; }
 #deco1 { animation-delay: 0.7s;}
 #buttons { animation-delay: 0.9s;}
+#deco2 { animation-delay: 1s;}
+#about-me { animation-delay: 1.2s;}
