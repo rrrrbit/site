@@ -28,7 +28,7 @@
     outline: 1px solid white;
     background: rgba(0, 0, 0, 1);
     padding: var(--thinPadding);
-
+    z-index: 67;
 }
 
 #content {
@@ -71,7 +71,31 @@
 }
 
 #about-me {
-    width: 256px;
+    width: 128px;
+    height: fit-content;
+}
+
+#about-me-2 {
+    width: 192px;
+    height: fit-content;
+    overflow-wrap: normal;
+}
+
+#about-me-3 {
+    height: fit-content;
+    width: 192px;
+    overflow-wrap: normal;
+}
+
+#about-site {
+    width: 192px;
+    height: fit-content;
+    overflow-wrap: normal;
+}
+
+#about-site-2 {
+    width: 160px;
+    height: fit-content;
 }
 
 #deco0, #deco1, #deco2 {
@@ -85,7 +109,7 @@
 }
 
 #buttons {
-    width: calc(88px * 2 + 16px + var(--thinPadding) * 2);
+    width: calc(88px * 2 + var(--thinPadding) * 2);
     height: fit-content;
     max-height: 196px;
     > div[slot="content"] {
@@ -107,3 +131,8 @@
 #buttons { animation-delay: 0.9s;}
 #deco2 { animation-delay: 1s;}
 #about-me { animation-delay: 1.2s;}
+#about-me-2 {animation-delay: 1.3s;}
+#about-me-3 {animation-delay: 1.5s;}
+#deco3 {animation-delay: 1.6s;}
+#about-site {animation-delay: 1.8s;}
+#about-site-2 { animation-delay: 1.9s;}
