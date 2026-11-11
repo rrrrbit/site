@@ -34,27 +34,32 @@
     </div>
     <div id="content">
         <div class="row">
-            <div id="deco-title" class="ascii-art accent anim">
+            <div class="flicker-in" id="title-flicker-div">
+                <div id="deco-title" class="ascii-art accent anim">
 ██████████  ██  ██  ██████████
 ██      ██  ██          ██
 ██████████  ██████  ██  ██  ██
 ██  ██      ██  ██  ██  ██
 ██  ██  ██  ██████  ██  ██  ██
+ </div>
             </div>
+            
         </div>
         <div class="row">
-            <window- id="about-me">
+            <window- id="table-contents" class="flicker-in">
                 <span slot="title">contents</span>
-                <span slot="content">top<br>about me<br>about this</span>
+                <div slot="content">
+                    TOP<br><br>
+                    ABOUT ME<br><br>
+                    ABOUT THIS SITE<br>
+                </div>
             </window->
-            <div id="deco0" class="ascii-art">██  ██
-██  
+            <div id="deco0" class="ascii-art flicker-in">██  ██
+  
 ██  ██████
-██      ██
-    ██████
+        ██
+██  ██████
 ██  ██  
-    ██  
-██  ██
 ██  ██  ██
 ██
 ██  ██
@@ -62,20 +67,20 @@
 </div>
         </div>
         <div class="row">
-            <div id="deco1" class="ascii-art flip">██████  ██
-██      ██
-██  ██  ██ 
+            <div id="deco1" class="ascii-art flip flicker-in">██████
+██    
+██  ██ 
     ██  
-██████  ██
+██████
 ██
 ██  ██
 ██  ██
-██  ██████
+██  ██
 ██
 
 ██
 </div>
-            <window- id="portfolio">
+            <window- id="portfolio" class="flicker-in">
                 <span slot="title"> portfolio </span>
                 <div slot="content">
                     <a href="portfolio/games.html">GAMES</a><br><br>
@@ -84,7 +89,7 @@
                     <span class="locked">VISUALS</span>
                 </div>
             </window->
-            <window- id="socials">
+            <window- id="socials" class="flicker-in">
                 <div slot="title">socials</div>
                 <div id="socialsInner" slot="content">
                     <a href="https://rrbit.itch.io/"><img src="https://images.seeklogo.com/logo-png/64/2/itch-io-logo-png_seeklogo-649245.png" width="auto" height="31"></a>
@@ -101,7 +106,7 @@
             </window->
         </div>
         <div class="row">
-            <window- id="homeBadges">
+            <window- id="buttons" class="flicker-in">
                 <div slot="title">buttons</div>
                 <div id="homeBadgesInner" slot="content">
                     <a href="https://celestialspark21.neocities.org/"><img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31"></a>

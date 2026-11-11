@@ -37,66 +37,67 @@
     flex-direction: column;
     gap: var(--thickPaddingX) var(--thickPaddingY);
 }
+
 #portfolio {
     width: fit-content;
+    > div[slot="content"] {
+        text-align: center;
+        text-justify: center;
+        padding: var(--thickPaddingY) var(--thickPaddingX);
+    }
 }
 
-#portfolio > div[slot="content"] {
-    text-align: center;
-    text-justify: center;
-    padding: var(--thickPaddingY) var(--thickPaddingX);
-}
-
-
-#about-me {
-    width: 320px;
+#table-contents {
     max-height: 256px;
     height: fit-content;
-}
-#about-me > div[slot="content"] {
-    overflow-y: scroll;
-    height: 100%;
-    scrollbar-width: thin;
+    > div[slot="content"] {
+        padding: var(--thickPaddingY) var(--thickPaddingX);
+    }
 }
 
 #socials {
-    width: calc(88px * 2 + 16px + var(--thinPadding) * 2);
+    width: 160px;
     height: fit-content;
     align-self: end;
+    > div[slot="content"] {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 4px;
+    }
 }
-#homeBadges, #socials img {
+
+#buttons, #socials img {
     display: block;
 }
-#socials > div[slot="content"] {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 4px;
-}
 
-#deco0 {
+#deco0, #deco1 {
     min-width: fit-content;
 }
 
-#deco1 {
-    min-width: fit-content;
-}
 .vstack {
     display: flex;
     flex-direction: column;
     gap: var(--thickPaddingY) var(--thickPaddingX)
 }
 
-#homeBadges {
+#buttons {
     width: calc(88px * 2 + 16px + var(--thinPadding) * 2);
     height: fit-content;
     max-height: 196px;
+    > div[slot="content"] {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3px 2px;
+        scrollbar-width: thin;
+        overflow-y: scroll;
+        height: 100%;
+    }
 }
 
-#homeBadges > div[slot="content"] {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3px 2px;
-    scrollbar-width: thin;
-    overflow-y: scroll;
-    height: 100%;
-}
+#title-flicker-div { animation-delay: 0s; }
+#table-contents { animation-delay: 0.2s; }
+#deco0 { animation-delay: 0.3s; }
+#portfolio { animation-delay: 0.5s; }
+#socials { animation-delay: 0.6s; }
+#deco1 { animation-delay: 0.7s;}
+#buttons { animation-delay: 0.9s;}
