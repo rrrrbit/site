@@ -69,7 +69,7 @@ a:hover:not(.no-anim), a:hover *:not(.no-anim) {
 }
 
 .flicker-in {
-    animation: flicker-in 0.04s linear 2 normal backwards;
+    animation: flicker-in 0.05s linear 2 normal backwards;
 }
 
 @keyframes flicker-in {
