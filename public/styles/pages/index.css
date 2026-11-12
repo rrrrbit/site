@@ -7,7 +7,7 @@
     }
 }
 
-#table-contents {
+#table-contents, #bottom-nav {
     max-height: 256px;
     height: fit-content;
     width: fit-content;

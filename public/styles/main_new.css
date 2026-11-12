@@ -7,6 +7,8 @@ html {
     --thinPadding: 8px;
     --thickPaddingX: 2ch;
     --thickPaddingY: 1lh;
+
+    --rbit-ease-out: cubic-bezier(0,.5,0,1);
 }
 
 body {
@@ -114,6 +116,58 @@ a:hover:not(.no-anim), a:hover *:not(.no-anim) {
     }
 }
 
+.slide-in-left {
+    animation: slide-in-left 1s var(--rbit-ease-out) 1 normal backwards;
+}
+
+@keyframes slide-in-left { 
+    0% {
+        transform: translateX(-32px);
+        opacity: 0;
+    }
+    1% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+.slide-in-right {
+
+    animation: slide-in-right 1s var(--rbit-ease-out) 1 normal backwards;
+}
+
+@keyframes slide-in-right { 
+    0% {
+        transform: translateX(32px);
+        opacity: 0;
+    }
+    1% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+.slide-in-bottom {
+
+    animation: slide-in-bottom 1s var(--rbit-ease-out) 1 normal backwards;
+}
+
+@keyframes slide-in-bottom { 
+    0% {
+        transform: translateY(32px);
+        opacity: 0;
+    }
+    1% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}
 wip- {
     color: orange;
     font-family: Arial, Helvetica, sans-serif;
