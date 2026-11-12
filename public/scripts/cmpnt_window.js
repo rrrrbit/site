@@ -62,4 +62,4 @@ class CmpntWindow extends HTMLElement {
 }
 
 // 3. Register the custom tag (must contain a hyphen)
-customElements.define('window-', CmpntWindow);
+//customElements.define('window-', CmpntWindow);

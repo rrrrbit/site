@@ -50,9 +50,7 @@
 #table-contents {
     max-height: 256px;
     height: fit-content;
-    > div[slot="content"] {
-        padding: var(--thickPaddingY) var(--thickPaddingX);
-    }
+    width: fit-content;
 }
 
 #socials {
