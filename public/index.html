@@ -3,9 +3,6 @@
     - animate accent with gif
     - make accent texture sparser
     - standardise font
-    - replace aboutme with table of contents
-    - add new about me
-    - add about this site
 -->
 
 
@@ -20,7 +17,8 @@
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="styles/linear/main.css">
+    <link rel="stylesheet" href="styles/linear_new.css">
+    <link rel="stylesheet" href="styles/pages/index.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono">
     
     <link rel="icon" type="image/x-icon" href="assets/favicon (1).ico">
@@ -46,25 +44,22 @@
             
         </div>
         <div class="row">
-            <window- id="table-contents" class="flicker-in">
-                <span slot="title">contents</span>
-                <div slot="content">
-                    TOP <<br><br>
+            <window- data-title="contents" id="table-contents" class="flicker-in">
+                <window-contents class="locked">
+                    TOP<br><br>
                     <a href="#about-me">ABOUT ME</a><br><br>
-                    <a href="#about-site">ABOUT THIS SITE</a><br><br>
-                    <a>BOTTOM</a> 
-                </div>
+                    <a href="#about-site">ABOUT THIS SITE</a><br>
+                </window-contents>
             </window->
             <div id="deco0" class="ascii-art flicker-in">██  ██
-  
+    ██
 ██  ██████
         ██
 ██  ██████
-██  ██  
-██  ██  ██
-██
+██    
 ██  ██
 ██
+██  
 </div>
         </div>
         <div class="row">
@@ -77,44 +72,39 @@
 ██  ██
 ██
 ██
-██
 
 ██
 </div>
-            <window- id="portfolio" class="flicker-in">
-                <span slot="title"> portfolio </span>
-                <div slot="content">
+            <window- id="portfolio" class="flicker-in" data-title="portfolio">
+                <window-contents>
                     <a href="portfolio/games.html">GAMES</a><br><br>
                     <span class="locked">APPS</span><br><br>
                     <span class="locked">MUSIC</span><br><br>
                     <span class="locked">VISUALS</span>
-                </div>
+                </window-contents>
             </window->
             <box- id="socials" class="flicker-in">
-                <div id="socialsInner" slot="content">
-                    <a href="https://rrbit.itch.io/"><img src="https://images.seeklogo.com/logo-png/64/2/itch-io-logo-png_seeklogo-649245.png" width="auto" height="31"></a>
-                    <a href="https://youtube.com/@_rbit"><img src="assets/yt_icon_red_digital.png" width="auto" height="31"></a>
-                    <a href="https://reddit.com/user/rbit_/"><img src="assets/Reddit_Icon_1Color_Silhouette.png" width="auto" height="31"></a>
-                    <a href="https://ko-fi.com/rbit_/"><img src="assets\kofi_symbol.png" width="auto" height="31"></a>
-                    <a href="https://rbit.bandcamp.com/"><img src="https://s4.bcbits.com/vite/corp-pages/client/v1/en/assets/bandcamp-button-circle-aqua-512-DR-rk-YT.png" width="auto" height="31"></a>
-                    <a href="https://linkedin.com/in/jon-emmanuel-macagba-88614a38b"><img src="assets/LI-In-Bug.png" width="auto" height="31"></a>
-                    <a href="https://rbit.bsky.social/"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original" width="auto" height="31"></a>
-                    <a href="https://dsc.gg/rbit"><img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/66e3d80db9971f10a9757c99_Symbol.svg" width="auto" height="31"></a>
-                    <a href="https://r-bit.carrd.co/"><img src="https://carrd.com/assets/docs/images/brand/png/icon-color.png" width="auto" height="31"></a>
-                    <a href="https://www.twitch.tv/rbiit_"><img src="assets/glitch_flat_purple.png" width="auto" height="31"></a>
-                </div>
-            </window->
+                <a href="https://rrbit.itch.io/"><img src="https://images.seeklogo.com/logo-png/64/2/itch-io-logo-png_seeklogo-649245.png" width="auto" height="31"></a>
+                <a href="https://youtube.com/@_rbit"><img src="assets/yt_icon_red_digital.png" width="auto" height="31"></a>
+                <a href="https://reddit.com/user/rbit_/"><img src="assets/Reddit_Icon_1Color_Silhouette.png" width="auto" height="31"></a>
+                <a href="https://ko-fi.com/rbit_/"><img src="assets\kofi_symbol.png" width="auto" height="31"></a>
+                <a href="https://rbit.bandcamp.com/"><img src="https://s4.bcbits.com/vite/corp-pages/client/v1/en/assets/bandcamp-button-circle-aqua-512-DR-rk-YT.png" width="auto" height="31"></a>
+                <a href="https://linkedin.com/in/jon-emmanuel-macagba-88614a38b"><img src="assets/LI-In-Bug.png" width="auto" height="31"></a>
+                <a href="https://rbit.bsky.social/"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Bluesky_Logo.svg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original" width="auto" height="31"></a>
+                <a href="https://dsc.gg/rbit"><img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/66e3d80db9971f10a9757c99_Symbol.svg" width="auto" height="31"></a>
+                <a href="https://r-bit.carrd.co/"><img src="https://carrd.com/assets/docs/images/brand/png/icon-color.png" width="auto" height="31"></a>
+                <a href="https://www.twitch.tv/rbiit_"><img src="assets/glitch_flat_purple.png" width="auto" height="31"></a>
+                <a href="https://github.com/rrrrbit"><img src="assets/github-white-icon.png" width="auto" height="31"></a>
+            </box->
         </div>
         <div class="row">
             <box- id="buttons" class="flicker-in">
-                <div id="homeBadgesInner" slot="content">
-                    <a href="https://celestialspark21.neocities.org/"><img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31"></a>
-                    <iframe src="//incr.easrng.net/badge?key=changeme" style="background: url(//incr.easrng.net/bg.gif)" title="increment badge" width="88" height="31" frameborder="0"></iframe>
-                    <a href="https://corru.observer/"><img src="https://corru.observer/8831.gif" width="88" height="31"></a>
-                    <a href="https://irony-machine.neocities.org/"><img src="https://irony-machine.neocities.org/buttons/buttons/irony-machine2.gif" width="88" height="31"></a>
-                    <img src="https://otherswap.neocities.org/images/buttons/83_kris.png" width="88" height="31">
-                    <a href="https://www.sbnation.com/a/17776-football"><img src="https://rose.systems/88x31/i/17776.gif" width="88" height="31"></a>
-                </div>
+                <a href="https://celestialspark21.neocities.org/"><img src="https://88x31.nl/gifs/88x31.gif" width="88" height="31"></a>
+                <iframe src="//incr.easrng.net/badge?key=changeme" style="background: url(//incr.easrng.net/bg.gif)" title="increment badge" width="88" height="31" frameborder="0"></iframe>
+                <a href="https://corru.observer/"><img src="https://corru.observer/8831.gif" width="88" height="31"></a>
+                <a href="https://irony-machine.neocities.org/"><img src="https://irony-machine.neocities.org/buttons/buttons/irony-machine2.gif" width="88" height="31"></a>
+                <img src="https://otherswap.neocities.org/images/buttons/83_kris.png" width="88" height="31">
+                <a href="https://www.sbnation.com/a/17776-football"><img src="https://rose.systems/88x31/i/17776.gif" width="88" height="31"></a>
             </box->
             <div id="deco2" class="ascii-art flicker-in">██████  ██  
 ██
@@ -124,14 +114,14 @@
 </div>
         </div>
         <div class="row">
-            <window- id="about-me" class="flicker-in">
-                <div slot="title">about me</div>
-                <div slot="content">
-                    <p>
+            <div class="vstack">
+                <window- id="about-me" class="flicker-in" data-title="about me">
+                    <window-contents>
                         Hi, I'm Jem, a.k.a. RBIT! 
-                    </p>
-                </div>
-            </window->
+                    </window-contents>
+                </window->
+                <div id="deco4" class="ascii-art flicker-in flip">██████  ██  ██</div>
+            </div>
             <box- id="about-me-2" class="flicker-in">
                 I'm a student and creative generalist based in London. Currently, I mostly make games and some music.
             </box->
@@ -150,11 +140,10 @@
 </div>
         </div>
         <div class="row">
-            <window- id="about-site" class="flicker-in">
-                <div slot="title">about this site</div>
-                <div slot="content">
+            <window- id="about-site" class="flicker-in" data-title="about this site">
+                <window-contents>
                     This is personal site, which will contain my portfolio in various sections and other tidbits. It's still a very unpolished work in progress, so please bear with me!
-                </div>
+                </window-contents>
             </window->
             <box- id="about-site-2" class="flicker-in">
                 This site is destined for <a href="space.html">a gimmick</a>. However, I've chosen to figure out this site's style in a linear format before switching to it. 

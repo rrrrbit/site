@@ -1,0 +1,23 @@
+@import "main_games.css";
+
+#box-gif {
+    width: 100%;
+    align-self: center;
+    padding: 0px;
+    img{
+        width: 100%;
+        height: auto;
+    }
+}
+
+#about {
+    width: 512px;
+}
+
+#about-2{
+    width: 512px;
+}
+
+#about-3 {
+    width: 512px;
+}

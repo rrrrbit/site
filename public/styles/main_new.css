@@ -1,0 +1,155 @@
+html {
+    scrollbar-width: none;
+    overscroll-behavior: contain;
+    scrollbar-color: rgba(255, 255, 255, 1) rgba(0,0,0,0);
+    image-rendering: crisp-edges;
+
+    --thinPadding: 8px;
+    --thickPaddingX: 2ch;
+    --thickPaddingY: 1lh;
+}
+
+body {
+    background: black;
+    font-family: monospace;
+    line-height: 100%;
+    font-size: 1rem;
+    color: white;
+    margin: 0;
+}
+
+
+table {
+    border-collapse: collapse;
+}
+
+tr {
+    outline: 1px solid white;
+}
+
+button {
+    pointer-events: all;
+}
+
+a, .text-deco {
+    color: white;
+    text-decoration: underline dotted 1px;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+p:not(p + p) {
+    margin-top: 0px;
+}
+
+.vstack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--thickPaddingY) var(--thickPaddingX)
+}
+
+.locked {
+    color: rgb(64,64,64);
+}
+
+.ascii-art {
+    white-space: pre;
+    margin: 0;
+    padding: 0;
+}
+
+.accent, a:hover, a:hover * {
+    color: transparent;
+    background:
+        linear-gradient(
+            rgba(255,255,255,0.5),
+            rgba(255,255,255,0.5)
+        ),
+        url('../assets/accent texture light.png');
+    background-repeat: repeat;
+    background-clip: text;
+    background-attachment: fixed;
+}
+
+.hide-deco {
+    text-decoration: none;
+}
+
+a:hover:not(.no-anim), a:hover *:not(.no-anim) {
+    animation: texture-accent-moving 60s linear normal infinite
+}
+
+.text-long {
+    color: grey;
+    hl- {
+        color: white;
+    }
+}
+
+.accent.anim {
+    animation: texture-accent-moving 60s linear normal infinite
+}
+
+@keyframes texture-accent-moving {
+    from {
+        background-position: top;
+    }
+    to {
+        background-position: bottom;
+    }
+}
+
+.flicker-in {
+    animation: flicker-in 0.05s linear 2 normal backwards;
+}
+
+@keyframes flicker-in {
+    1%, 49% {
+        opacity: 1;
+    }
+    0%, 50%, 100% {
+        opacity: 0;
+    }
+}
+
+wip- {
+    color: orange;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.5rem;
+}
+
+box- {
+    display: block;
+    outline: 1px solid white;
+    padding: var(--thinPadding);
+}
+
+window- {
+    display: grid;
+    outline: 1px solid white;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    max-height: inherit;
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    min-width: 0;
+
+    > window-contents {
+        padding: var(--content-padding, var(--thinPadding));
+        box-sizing: border-box;
+        min-height: 0;
+        min-width: 0;
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+
+window-[data-title]::before {
+    content: attr(data-title);
+    outline: 1px solid white;
+    padding: var(--thinPadding);
+    z-index: 1;
+}

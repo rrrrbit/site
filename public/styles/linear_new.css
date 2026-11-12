@@ -1,0 +1,31 @@
+@import "main_new.css";
+
+.row {
+    display: flex;
+    gap: var(--thickPaddingX) var(--thickPaddingY);
+    justify-content: center;
+}
+
+.flip {
+    text-align: right;
+    text-wrap: wrap;
+    word-break: break-all;
+    direction: rtl;
+    unicode-bidi: bidi-override;
+}
+
+#topbar {
+    position: sticky;
+    top: 0;
+    outline: 1px solid white;
+    background: rgba(0, 0, 0, 1);
+    padding: var(--thinPadding);
+    z-index: 67;
+}
+
+#content {
+    padding: var(--thickPaddingY) var(--thickPaddingX);
+    display: flex;
+    flex-direction: column;
+    gap: var(--thickPaddingX) var(--thickPaddingY);
+}
