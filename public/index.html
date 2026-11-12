@@ -45,11 +45,11 @@
         </div>
         <div class="row">
             <window- data-title="contents" id="table-contents" class="flicker-in">
-                <div slot="content" class="locked">
+                <window-contents class="locked">
                     TOP<br><br>
                     ABOUT ME<br><br>
                     ABOUT THIS SITE<br>
-                </div>
+                </window-contents>
             </window->
             <div id="deco0" class="ascii-art flicker-in">██  ██
   
@@ -77,14 +77,13 @@
 
 ██
 </div>
-            <window- id="portfolio" class="flicker-in">
-                <span slot="title"> portfolio </span>
-                <div slot="content">
+            <window- id="portfolio" class="flicker-in" data-title="portfolio">
+                <window-contents>
                     <a href="portfolio/games.html">GAMES</a><br><br>
                     <span class="locked">APPS</span><br><br>
                     <span class="locked">MUSIC</span><br><br>
                     <span class="locked">VISUALS</span>
-                </div>
+                </window-contents>
             </window->
             <box- id="socials" class="flicker-in">
                 <div id="socialsInner" slot="content">
@@ -100,7 +99,7 @@
                     <a href="https://www.twitch.tv/rbiit_"><img src="assets/glitch_flat_purple.png" width="auto" height="31"></a>
                     <a href="https://github.com/rrrrbit"><img src="assets/github-white-icon.png" width="auto" height="31"></a>
                 </div>
-            </window->
+            </box->
         </div>
         <div class="row">
             <box- id="buttons" class="flicker-in">
@@ -122,11 +121,10 @@
         </div>
         <div class="row">
             <div class="vstack">
-                <window- id="about-me" class="flicker-in">
-                    <div slot="title">about me</div>
-                    <div slot="content">
+                <window- id="about-me" class="flicker-in" data-title="about me">
+                    <window-contents>
                         Hi, I'm Jem, a.k.a. RBIT! 
-                    </div>
+                    </window-contents>
                 </window->
                 <div id="deco4" class="ascii-art flicker-in flip">██████  ██  ██
 </div>
@@ -149,11 +147,10 @@
 </div>
         </div>
         <div class="row">
-            <window- id="about-site" class="flicker-in">
-                <div slot="title">about this site</div>
-                <div slot="content">
+            <window- id="about-site" class="flicker-in" data-title="about this site">
+                <window-contents>
                     This is personal site, which will contain my portfolio in various sections and other tidbits. It's still a very unpolished work in progress, so please bear with me!
-                </div>
+                </window-contents>
             </window->
             <box- id="about-site-2" class="flicker-in">
                 This site is destined for <a href="space.html">a gimmick</a>. However, I've chosen to figure out this site's style in a linear format before switching to it. 
