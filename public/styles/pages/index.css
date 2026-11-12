@@ -1,6 +1,6 @@
 #portfolio {
     width: fit-content;
-    > div[slot="content"] {
+    window-contents {
         text-align: center;
         text-justify: center;
         padding: var(--thickPaddingY) var(--thickPaddingX);
@@ -11,17 +11,20 @@
     max-height: 256px;
     height: fit-content;
     width: fit-content;
+    window-contents {
+        text-align: center;
+        text-justify: center;
+        padding: var(--thickPaddingY) var(--thickPaddingX);
+    }
 }
 
 #socials {
     width: 160px;
     height: fit-content;
     align-self: end;
-    > div[slot="content"] {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px 4px;
-    }
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 4px;
 }
 
 #buttons, #socials img {
@@ -64,14 +67,12 @@
     width: calc(88px * 2 + var(--thinPadding) * 2);
     height: fit-content;
     max-height: 196px;
-    > div[slot="content"] {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 3px 2px;
-        scrollbar-width: thin;
-        overflow-y: scroll;
-        height: 100%;
-    }
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px 2px;
+    scrollbar-width: thin;
+    overflow-y: scroll;
+    height: 100%;
 }
 
 #title-flicker-div { animation-delay: 0.2s; }
