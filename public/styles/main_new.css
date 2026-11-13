@@ -8,7 +8,8 @@ html {
     --thickPaddingX: 2ch;
     --thickPaddingY: 1lh;
 
-    --rbit-ease-out: cubic-bezier(0,.5,0,1);
+    --rbit-ease-out: 2s cubic-bezier(0,1,0,1);
+    --rbit-slide-offset: 16px;
 }
 
 body {
@@ -117,12 +118,12 @@ a:hover:not(.no-anim), a:hover *:not(.no-anim) {
 }
 
 .slide-in-left {
-    animation: slide-in-left 1s var(--rbit-ease-out) 1 normal backwards;
+    animation: slide-in-left var(--rbit-ease-out) 1 normal backwards;
 }
 
 @keyframes slide-in-left { 
     0% {
-        transform: translateX(-32px);
+        transform: translateX(calc(-1 * var(--rbit-slide-offset)));
         opacity: 0;
     }
     1% {
@@ -135,12 +136,12 @@ a:hover:not(.no-anim), a:hover *:not(.no-anim) {
 
 .slide-in-right {
 
-    animation: slide-in-right 1s var(--rbit-ease-out) 1 normal backwards;
+    animation: slide-in-right var(--rbit-ease-out) 1 normal backwards;
 }
 
 @keyframes slide-in-right { 
     0% {
-        transform: translateX(32px);
+        transform: translateX(var(--rbit-slide-offset));
         opacity: 0;
     }
     1% {
@@ -153,21 +154,40 @@ a:hover:not(.no-anim), a:hover *:not(.no-anim) {
 
 .slide-in-bottom {
 
-    animation: slide-in-bottom 1s var(--rbit-ease-out) 1 normal backwards;
+    animation: slide-in-bottom var(--rbit-ease-out) 1 normal backwards;
 }
 
 @keyframes slide-in-bottom { 
     0% {
-        transform: translateY(32px);
+        transform: translateY(var(--rbit-slide-offset));
         opacity: 0;
     }
     1% {
         opacity: 1;
     }
     100% {
-        transform: translateX(0px);
+        transform: translateY(0px);
     }
 }
+
+.slide-in-top {
+
+    animation: slide-in-top var(--rbit-ease-out) 1 normal backwards;
+}
+
+@keyframes slide-in-top { 
+    0% {
+        transform: translateY(calc(-1 * var(--rbit-slide-offset)));
+        opacity: 0;
+    }
+    1% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
 wip- {
     color: orange;
     font-family: Arial, Helvetica, sans-serif;
